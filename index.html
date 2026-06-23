@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7EC8C9">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="题宝">
+<link rel="apple-touch-icon" href="tibo-mascot.png">
 <title>题宝~TiBo - 智能刷题助手</title>
 <style>
 /* ===== CSS Variables ===== */
@@ -1892,6 +1898,15 @@ document.addEventListener('keydown', function(e) {
 // Start App
 // ============================================================
 init();
+
+// ===== PWA Service Worker =====
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./sw.js').then(function(reg) {
+      console.log('SW registered');
+    }).catch(function(err) {
+      console.log('SW failed:', err);
+    });
+  });
+}
 </script>
-</body>
-</html>
