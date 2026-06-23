@@ -7,32 +7,32 @@
 <style>
 /* ===== CSS Variables ===== */
 :root {
-  --primary: #7EC8C9;
-  --primary-light: #B5DCD9;
-  --primary-dark: #5BA3A6;
-  --primary-bg: #E8F5F2;
-  --bg: #F2F9F8;
+  --primary: #4CAF50;
+  --primary-light: #81C784;
+  --primary-dark: #388E3C;
+  --primary-bg: #f1f8e9;
+  --bg: #f1f8e9;
   --card-bg: #ffffff;
   --text: #333333;
   --text-secondary: #666666;
   --border: #e0e0e0;
   --shadow: 0 2px 12px rgba(0,0,0,0.08);
   --shadow-hover: 0 4px 20px rgba(0,0,0,0.12);
-  --correct: #7EC8C9;
-  --wrong: #E8B4B8;
+  --correct: #4CAF50;
+  --wrong: #f44336;
   --radius: 16px;
   --font: 'PingFang SC', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 [data-theme="dark"] {
-  --primary: #7EC8C9;
-  --primary-light: #B5DCD9;
+  --primary: #66BB6A;
+  --primary-light: #81C784;
   --primary-dark: #4CAF50;
   --primary-bg: #1b2e1b;
   --bg: #1b2e1b;
-  --card-bg: #2a3f3e;
+  --card-bg: #2a3f2a;
   --text: #e0e0e0;
   --text-secondary: #a0a0a0;
-  --border: #3a5a59;
+  --border: #3a5a3a;
   --shadow: 0 2px 12px rgba(0,0,0,0.3);
   --shadow-hover: 0 4px 20px rgba(0,0,0,0.4);
 }
@@ -54,7 +54,7 @@ body { padding-bottom: 80px; }
   position: fixed; top:0; left:0; width:100%; height:100%;
   z-index: 10000;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  background: linear-gradient(145deg, #5BA3A6 0%, #7EC8C9 60%, #B5DCD9 100%);
+  background: linear-gradient(135deg, #1b5e20 0%, #4CAF50 50%, #81C784 100%);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 #splash.hide {
@@ -67,8 +67,7 @@ body { padding-bottom: 80px; }
 #splash-overlay {
   position: absolute; top:0; left:0; width:100%; height:100%;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  background: rgba(0,0,0,0.15);
-  backdrop-filter: blur(4px);
+  background: rgba(0,0,0,0.3);
 }
 #splash-logo {
   width: 100px; height: 100px;
@@ -243,7 +242,6 @@ body { padding-bottom: 80px; }
   box-shadow: var(--shadow);
   transition: all 0.3s;
   animation: cardEnter 0.4s ease;
-  border-top: 4px solid var(--primary-light);
 }
 .question-card.exit {
   animation: cardExit 0.3s ease forwards;
@@ -278,11 +276,11 @@ body { padding-bottom: 80px; }
   border-color: var(--primary); background: var(--primary-bg);
 }
 .option-btn.correct {
-  border-color: var(--correct); background: rgba(126,200,201,0.1);
+  border-color: var(--correct); background: rgba(76,175,80,0.1);
   animation: bounceIn 0.5s ease;
 }
 .option-btn.wrong {
-  border-color: var(--wrong); background: rgba(232,180,184,0.1);
+  border-color: var(--wrong); background: rgba(244,67,54,0.1);
   animation: shake 0.5s ease;
 }
 .option-btn.disabled { pointer-events: none; opacity: 0.7; }
@@ -368,30 +366,9 @@ body { padding-bottom: 80px; }
   padding: 8px 0; cursor: pointer; transition: all 0.2s;
   border: none; background: transparent; color: var(--text-secondary);
   font-size: 11px; gap: 2px;
-  position: relative;
 }
 .nav-item.active { color: var(--primary); }
-.nav-item.active .nav-icon {
-  transform: translateY(-3px) scale(1.08);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.nav-item.active::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 32px;
-  height: 3px;
-  background: var(--primary);
-  border-radius: 0 0 3px 3px;
-  animation: navIndicator 0.3s ease;
-}
-@keyframes navIndicator {
-  from { width: 0; opacity: 0; }
-  to { width: 32px; opacity: 1; }
-}
-.nav-icon { font-size: 22px; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.nav-icon { font-size: 22px; }
 
 /* ===== Pages ===== */
 .page { display: none; padding: 16px; }
@@ -460,7 +437,6 @@ body { padding-bottom: 80px; }
   background: rgba(0,0,0,0.5); z-index: 500;
   display: none; align-items: center; justify-content: center;
   animation: fadeIn 0.3s ease;
-  backdrop-filter: blur(4px);
 }
 .modal-overlay.show { display: flex; }
 .modal {
@@ -577,15 +553,10 @@ body { padding-bottom: 80px; }
     <source src="splash-video.mp4" type="video/mp4">
   </video>
   <div id="splash-overlay">
-    <video id="splash-mascot-video" autoplay muted playsinline loop
-      style="width:120px;height:120px;border-radius:24px;object-fit:cover;margin-bottom:16px;
-             box-shadow:0 8px 32px rgba(0,0,0,0.3);animation:splashFloat 2s ease-in-out infinite;">
-      <source src="tibo-mascot.mp4" type="video/mp4">
-    </video>
-    <img id="splash-logo" src="tibo-mascot.png" onerror="this.style.display='none'" alt="TiBo" style="display:none;">
+    <img id="splash-logo" src="tibo-mascot.png" onerror="this.style.display='none'" alt="TiBo">
     <h1>题宝</h1>
     <p>TiBo - 智能刷题助手</p>
-    <button id="splash-skip" onclick="closeSplash()">开始刷题 ✨</button>
+    <button id="splash-skip" onclick="closeSplash()">点击跳过</button>
   </div>
 </div>
 
@@ -656,19 +627,19 @@ body { padding-bottom: 80px; }
 <!-- Bottom Navigation -->
 <div class="bottom-nav">
   <button class="nav-item active" onclick="switchPage('quiz')" data-page="quiz">
-    <span class="nav-icon">&#128221;</span><span>刷刷刷</span>
+    <span class="nav-icon">&#9997;&#65039;</span><span>答题</span>
   </button>
   <button class="nav-item" onclick="switchPage('list')" data-page="list">
-    <span class="nav-icon">&#128214;</span><span>题海</span>
+    <span class="nav-icon">&#128196;</span><span>题库</span>
   </button>
   <button class="nav-item" onclick="switchPage('wrong')" data-page="wrong">
-    <span class="nav-icon">&#129513;</span><span>查漏</span>
+    <span class="nav-icon">&#10060;</span><span>错题</span>
   </button>
   <button class="nav-item" onclick="switchPage('fav')" data-page="fav">
-    <span class="nav-icon">&#128142;</span><span>宝藏</span>
+    <span class="nav-icon">&#11088;</span><span>收藏</span>
   </button>
   <button class="nav-item" onclick="switchPage('stats')" data-page="stats">
-    <span class="nav-icon">&#128200;</span><span>战绩</span>
+    <span class="nav-icon">&#128202;</span><span>统计</span>
   </button>
 </div>
 
@@ -1025,77 +996,6 @@ let state = {
 // ============================================================
 // 初始化
 // ============================================================
-
-// ============================================================
-// TIBO 鼓励语系统
-// ============================================================
-function tiboHappy() {
-  const happyMsgs = TIBO_MESSAGES.slice(5, 9); // 答对时鼓励语
-  const bubble = document.getElementById('tibo-bubble');
-  if (bubble) {
-    bubble.textContent = happyMsgs[Math.floor(Math.random() * happyMsgs.length)];
-    bubble.style.animation = 'none';
-    bubble.offsetHeight;
-    bubble.style.animation = 'bounceIn 0.5s ease';
-  }
-}
-
-function tiboCheer() {
-  const cheerMsgs = TIBO_MESSAGES.slice(9, 13); // 答错时鼓励语
-  const bubble = document.getElementById('tibo-bubble');
-  if (bubble) {
-    bubble.textContent = cheerMsgs[Math.floor(Math.random() * cheerMsgs.length)];
-    bubble.style.animation = 'none';
-    bubble.offsetHeight;
-    bubble.style.animation = 'bounceIn 0.5s ease';
-  }
-}
-
-// ============================================================
-// TIBO 鼓励语库（20条·场景化）
-// ============================================================
-const TIBO_MESSAGES = [
-  // 日常鼓励
-  '今天也要元气满满！',
-  '慢慢来，比较快～',
-  '每一步都算数！',
-  'TiBo 在为你加油！',
-  '稳住，我们能赢！',
-  // 答对时
-  '我就知道你可以！\uD83D\uDCAA',
-  '太强了吧！\uD83C\uDF1F',
-  '完美！继续保持！\u2728',
-  '聪明宝宝！\uD83E\uDDE0',
-  // 答错时
-  '没关系，错题是最好的老师！',
-  '再来一次会更好～',
-  'TiBo 陪你复盘！',
-  '别灰心，下次一定行！',
-  // 深夜模式
-  '还在学？注意休息哦～',
-  'TiBo 陪你熬夜，但别太晚！',
-  '晚安，明天继续加油\uD83C\uDF19',
-  // 随机趣味
-  '今天 TiBo 想给你一个抱抱～',
-  '刷题不如刷 TiBo 的可爱～',
-  '听说认真的人最好看！',
-  'TiBo 正在为你收集好运\uD83C\uDF40'
-];
-
-function checkLateNight() {
-  const hour = new Date().getHours();
-  if (hour >= 23 || hour < 6) {
-    const lateMsgs = TIBO_MESSAGES.slice(13, 16); // 深夜鼓励语
-    const bubble = document.getElementById('tibo-bubble');
-    if (bubble) {
-      bubble.textContent = lateMsgs[Math.floor(Math.random() * lateMsgs.length)];
-      bubble.style.animation = 'none';
-      bubble.offsetHeight;
-      bubble.style.animation = 'bounceIn 0.5s ease';
-    }
-  }
-}
-
 function init() {
   loadState();
   if (state.subjects.length === 0) {
@@ -1109,80 +1009,16 @@ function init() {
   initSwipeGesture();
   initMascotDrag();
   updateThemeUI();
-  checkLateNight();
 }
 
 // ============================================================
 // Splash Screen
 // ============================================================
-// ===== Web Audio 音效合成 =====
-function playSplashSound() {
-  try {
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    if (!AudioCtx) return;
-    const ctx = new AudioCtx();
-    const now = ctx.currentTime;
-
-    // 主音调 - 轻快的上升琶音 (C5 E5 G5 C6)
-    const notes = [523.25, 659.25, 783.99, 1046.50];
-    notes.forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0, now);
-      gain.gain.linearRampToValueAtTime(0.12, now + i * 0.12 + 0.05);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.6);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(now + i * 0.12);
-      osc.stop(now + i * 0.12 + 0.6);
-    });
-
-    // 清脆的高音点缀
-    const sparkle = ctx.createOscillator();
-    const sparkleGain = ctx.createGain();
-    sparkle.type = 'triangle';
-    sparkle.frequency.setValueAtTime(1318.51, now + 0.4);
-    sparkle.frequency.exponentialRampToValueAtTime(2093.00, now + 0.8);
-    sparkleGain.gain.setValueAtTime(0, now);
-    sparkleGain.gain.linearRampToValueAtTime(0.08, now + 0.45);
-    sparkleGain.gain.exponentialRampToValueAtTime(0.001, now + 1.0);
-    sparkle.connect(sparkleGain);
-    sparkleGain.connect(ctx.destination);
-    sparkle.start(now + 0.4);
-    sparkle.stop(now + 1.0);
-
-    // 柔和的低音铺垫
-    const bass = ctx.createOscillator();
-    const bassGain = ctx.createGain();
-    bass.type = 'sine';
-    bass.frequency.value = 261.63;
-    bassGain.gain.setValueAtTime(0, now);
-    bassGain.gain.linearRampToValueAtTime(0.06, now + 0.2);
-    bassGain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
-    bass.connect(bassGain);
-    bassGain.connect(ctx.destination);
-    bass.start(now);
-    bass.stop(now + 1.2);
-  } catch(e) { console.log('Audio not supported'); }
-}
-
 function initSplash() {
-  // 播放启动音效
-  playSplashSound();
-
   const video = document.getElementById('splash-video');
   video.addEventListener('error', function() {
     video.style.display = 'none';
   });
-
-  // Q版精灵视频也播放
-  const mascotVideo = document.getElementById('splash-mascot-video');
-  if (mascotVideo) {
-    mascotVideo.play().catch(() => {});
-  }
-
   setTimeout(closeSplash, 8000);
 }
 
@@ -1198,7 +1034,7 @@ function closeSplash() {
 // ============================================================
 function initParticles() {
   const container = document.getElementById('particles');
-  const colors = ['#7EC8C9', '#B5DCD9', '#A8D8D8', '#C8E6E4', '#5BA3A6'];
+  const colors = ['#4CAF50', '#81C784', '#A5D6A7', '#C8E6C9', '#388E3C'];
   for (let i = 0; i < 20; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
@@ -1426,7 +1262,6 @@ function selectOption(index) {
     state.stats[subId].correct++;
     triggerConfetti();
     triggerHaptic('correct');
-    tiboHappy();
   } else {
     state.stats[subId].wrong = (state.stats[subId].wrong || 0) + 1;
     // Add to wrong book
@@ -1435,7 +1270,6 @@ function selectOption(index) {
       state.wrongBook[subId].push(state.currentIndex);
     }
     triggerHaptic('wrong');
-    tiboCheer();
   }
 
   // Update history
@@ -1667,7 +1501,7 @@ function renderStats() {
   distCard.className = 'stats-card';
   distCard.innerHTML = '<div class="stats-title">题目分布</div>';
   const cats = [
-    { name: '期末综合', cat: 'final', color: '#7EC8C9' },
+    { name: '期末综合', cat: 'final', color: '#4CAF50' },
     { name: '第1-3章', cat: 'chapters1_3', color: '#2196F3' },
     { name: '第4-6章', cat: 'chapters4_6', color: '#FF9800' }
   ];
@@ -1693,7 +1527,6 @@ function toggleTheme() {
   document.documentElement.setAttribute('data-theme', state.theme);
   saveState();
   updateThemeUI();
-  checkLateNight();
 }
 
 function updateThemeUI() {
@@ -1706,7 +1539,7 @@ function updateThemeUI() {
 // Confetti
 // ============================================================
 function triggerConfetti() {
-  const colors = ['#7EC8C9', '#B5DCD9', '#FFD700', '#E8B4B8', '#64B5F6', '#BA68C8', '#FF8A65'];
+  const colors = ['#4CAF50', '#81C784', '#FFD700', '#FF6B6B', '#64B5F6', '#BA68C8', '#FF8A65'];
   for (let i = 0; i < 30; i++) {
     const piece = document.createElement('div');
     piece.className = 'confetti-piece';
@@ -1808,11 +1641,12 @@ function initMascotDrag() {
 
   function stopDrag() { isDragging = false; }
 
-
+  // Random encouragement
+  const encouragements = ['加油！', '真棒！', '继续努力！', '你是最棒的！', '相信自己！', '加油加油！', '棒棒哒！', '冲鸭！'];
   setInterval(() => {
     const bubble = document.getElementById('tibo-bubble');
     if (bubble) {
-      bubble.textContent = TIBO_MESSAGES[Math.floor(Math.random() * TIBO_MESSAGES.length)];
+      bubble.textContent = encouragements[Math.floor(Math.random() * encouragements.length)];
       bubble.style.animation = 'none';
       bubble.offsetHeight;
       bubble.style.animation = 'bounceIn 0.5s ease';
