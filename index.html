@@ -583,12 +583,16 @@ body { padding-bottom: 80px; }
     <source src="splash-video.mp4" type="video/mp4">
   </video>
   <div id="splash-overlay">
+    <img id="splash-logo" src="tibo-mascot.png" alt="TiBo"
+         onerror="this.style.display='none'"
+         style="width:120px;height:120px;border-radius:24px;object-fit:cover;margin-bottom:16px;
+                box-shadow:0 8px 32px rgba(0,0,0,0.3);animation:splashFloat 2s ease-in-out infinite;">
     <video id="splash-mascot-video" autoplay muted playsinline loop
-      style="width:120px;height:120px;border-radius:24px;object-fit:cover;margin-bottom:16px;
-             box-shadow:0 8px 32px rgba(0,0,0,0.3);animation:splashFloat 2s ease-in-out infinite;">
+      style="position:absolute;width:120px;height:120px;border-radius:24px;object-fit:cover;
+             margin-bottom:16px;box-shadow:0 8px 32px rgba(0,0,0,0.3);animation:splashFloat 2s ease-in-out infinite;
+             top:calc(50% - 100px);left:50%;transform:translateX(-50%);">
       <source src="tibo-mascot.mp4" type="video/mp4">
     </video>
-    <img id="splash-logo" src="tibo-mascot.png" onerror="this.style.display='none'" alt="TiBo" style="display:none;">
     <h1>题宝</h1>
     <p>TiBo - 智能刷题助手</p>
     <button id="splash-skip" onclick="closeSplash()">开始刷题 ✨</button>
@@ -1178,15 +1182,30 @@ function initSplash() {
   // 播放启动音效
   playSplashSound();
 
+  // 背景视频加载失败时隐藏
   const video = document.getElementById('splash-video');
-  video.addEventListener('error', function() {
-    video.style.display = 'none';
-  });
+  if (video) {
+    video.addEventListener('error', function() {
+      video.style.display = 'none';
+    });
+  }
 
-  // Q版精灵视频也播放
+  // Q版精灵视频：加载成功则显示并播放，失败则隐藏（图片fallback可见）
   const mascotVideo = document.getElementById('splash-mascot-video');
   if (mascotVideo) {
-    mascotVideo.play().catch(() => {});
+    mascotVideo.addEventListener('canplay', function() {
+      mascotVideo.style.display = 'block';
+      mascotVideo.play().catch(() => {});
+    });
+    mascotVideo.addEventListener('error', function() {
+      mascotVideo.style.display = 'none';
+    });
+    // 如果3秒内没加载成功，隐藏视频
+    setTimeout(function() {
+      if (mascotVideo.readyState < 2) {
+        mascotVideo.style.display = 'none';
+      }
+    }, 3000);
   }
 
   setTimeout(closeSplash, 8000);
