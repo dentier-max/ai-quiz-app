@@ -1,0 +1,28 @@
+{
+  "name": "题宝 TiBo",
+  "short_name": "题宝",
+  "description": "题宝 TiBo - 智能刷题助手",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F2F9F8",
+  "theme_color": "#7EC8C9",
+  "categories": [
+    "education",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "tibo-mascot.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "tibo-mascot.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
