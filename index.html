@@ -111,6 +111,69 @@ body { padding-bottom: 80px; }
   to { opacity:1; transform: translateY(0); }
 }
 
+/* ===== Header Center Style ===== */
+.header-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+.header-center .header-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+.header-center .title-main {
+  font-family: 'KaiTi','STKaiti','楷体','SimKaiti',serif;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+}
+.header-center .title-sep {
+  color: var(--primary);
+  font-weight: 400;
+}
+.header-center .title-tibo-bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(126,200,201,0.4);
+  border: 2px solid rgba(255,255,255,0.6);
+}
+
+/* ===== Language Switch Button ===== */
+.lang-switch-btn {
+  position: fixed;
+  top: 16px;
+  right: 80px;
+  z-index: 1000;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(126,200,201,0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lang-switch-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(126,200,201,0.4);
+}
+
 /* ===== Animations ===== */
 @keyframes slideUpIn {
   from { opacity:0; transform: translateY(40px); }
@@ -571,6 +634,239 @@ body { padding-bottom: 80px; }
 }
 .import-area:hover { border-color: var(--primary); background: var(--primary-bg); }
 .import-text { font-size: 14px; color: var(--text-secondary); }
+
+/* ===== Daily Practice Page ===== */
+.daily-header {
+  text-align: center;
+  padding: 20px 0 16px;
+  animation: fadeInUp 0.5s ease;
+}
+.daily-header h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--primary-dark);
+  margin-bottom: 4px;
+}
+.daily-header p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.daily-streak-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 12px 0 20px;
+  padding: 14px 20px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  animation: slideUpIn 0.4s ease 0.1s both;
+}
+.streak-number {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--primary);
+}
+.streak-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.streak-fire {
+  font-size: 28px;
+}
+.daily-calendar {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 16px 0;
+  animation: slideUpIn 0.4s ease 0.2s both;
+}
+.cal-day {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  color: var(--text-secondary);
+  transition: all 0.3s;
+}
+.cal-day.done {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+.cal-day.today {
+  border-color: var(--primary-dark);
+  box-shadow: 0 0 0 3px rgba(126,200,201,0.3);
+}
+.cal-day .cal-weekday {
+  font-size: 9px;
+  opacity: 0.7;
+}
+.daily-start-btn {
+  display: block;
+  width: 80%;
+  max-width: 300px;
+  margin: 20px auto;
+  padding: 16px;
+  border-radius: 16px;
+  border: none;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--primary-light));
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(126,200,201,0.4);
+  transition: all 0.3s;
+  animation: bounceIn 0.6s ease 0.3s both;
+}
+.daily-start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(126,200,201,0.5);
+}
+.daily-start-btn:active {
+  transform: scale(0.97);
+}
+.daily-start-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+.daily-result {
+  text-align: center;
+  padding: 24px 20px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin: 16px 0;
+  animation: scaleIn 0.5s ease;
+}
+.daily-result h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--primary-dark);
+  margin-bottom: 16px;
+}
+.daily-score {
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.daily-stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin: 16px 0;
+}
+.daily-stat-item {
+  text-align: center;
+}
+.daily-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+}
+.daily-stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.daily-tibo-msg {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--primary-bg);
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  border-left: 4px solid var(--primary);
+  animation: bounceIn 0.6s ease 0.3s both;
+}
+
+/* ===== Option Hover Enhancement ===== */
+.option-btn:hover:not(.disabled) {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(126,200,201,0.3);
+}
+
+/* ===== View Explanation Button ===== */
+.view-explain-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--primary);
+  background: var(--primary-bg);
+  color: var(--primary-dark);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  animation: fadeIn 0.4s ease 0.2s both;
+}
+.view-explain-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ===== TIBO Celebration Animation ===== */
+@keyframes tiboCelebrate {
+  0% { transform: translateY(0) scale(1); }
+  20% { transform: translateY(-20px) scale(1.1); }
+  40% { transform: translateY(-10px) scale(1.05); }
+  60% { transform: translateY(-25px) scale(1.15); }
+  80% { transform: translateY(-5px) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
+}
+.tibo-celebrate .tibo-img {
+  animation: tiboCelebrate 1s ease !important;
+}
+
+/* ===== Star Particles for TIBO ===== */
+@keyframes starBurst {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+.star-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--primary);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: starBurst 0.8s ease forwards;
+}
+
+/* ===== Swipe Page Transition ===== */
+@keyframes swipeLeftOut {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-100%); opacity: 0; }
+}
+@keyframes swipeLeftIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes swipeRightOut {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+@keyframes swipeRightIn {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.question-card.swipe-left-out { animation: swipeLeftOut 0.3s ease forwards; }
+.question-card.swipe-left-in { animation: swipeLeftIn 0.3s ease forwards; }
+.question-card.swipe-right-out { animation: swipeRightOut 0.3s ease forwards; }
+.question-card.swipe-right-in { animation: swipeRightIn 0.3s ease forwards; }
+
 </style>
 </head>
 <body>
@@ -601,10 +897,14 @@ body { padding-bottom: 80px; }
 
 <!-- Header -->
 <div class="header">
-  <div class="header-left">
-    <img class="header-logo" src="tibo-mascot.png" onerror="this.style.display='none'" alt="TiBo">
-    <span class="header-title">题宝~TiBo</span>
+  <div class="header-center">
+    <span class="header-title">
+      <span class="title-main" style="font-family:'KaiTi','STKaiti','楷体',serif">题宝</span>
+      <span class="title-sep">~</span>
+      <span class="title-tibo-bubble">TiBo</span>
+    </span>
   </div>
+  <button class="lang-switch-btn" id="lang-switch-btn" onclick="toggleLanguage()" title="切换语言">中</button>
   <div class="header-right">
     <button class="header-btn" onclick="toggleTheme()" title="切换主题" id="theme-btn">&#9728;&#65039;</button>
     <button class="header-btn" onclick="showSubjectModal()" title="科目管理">&#9881;&#65039;</button>
@@ -663,6 +963,26 @@ body { padding-bottom: 80px; }
   </div>
 </div>
 
+
+<!-- Daily Practice Page -->
+<div class="page" id="page-daily">
+  <div class="daily-header">
+    <h2>每日一练</h2>
+    <p>每天10道题，坚持刷题成为学霸！</p>
+  </div>
+  <div class="daily-streak-bar">
+    <span class="streak-fire">🔥</span>
+    <div>
+      <div class="streak-number" id="daily-streak-num">0</div>
+      <div class="streak-label">连续打卡天数</div>
+    </div>
+  </div>
+  <div class="daily-calendar" id="daily-calendar"></div>
+  <div id="daily-content">
+    <button class="daily-start-btn" id="daily-start-btn" onclick="startDailyPractice()">开始今日练习</button>
+  </div>
+</div>
+
 <!-- Bottom Navigation -->
 <div class="bottom-nav">
   <button class="nav-item active" onclick="switchPage('quiz')" data-page="quiz">
@@ -679,6 +999,9 @@ body { padding-bottom: 80px; }
   </button>
   <button class="nav-item" onclick="switchPage('stats')" data-page="stats">
     <span class="nav-icon">&#128200;</span><span>战绩</span>
+  </button>
+  <button class="nav-item" onclick="switchPage('daily')" data-page="daily">
+    <span class="nav-icon">🔥</span><span>每日练</span>
   </button>
 </div>
 
@@ -1310,6 +1633,85 @@ function switchSubject(id) {
   updateProgress();
 }
 
+
+function dailySelectOption(idx) {
+  if (dailyState.answered) return;
+  dailyState.answered = true;
+  dailyState.answers[dailyState.current] = idx;
+
+  const q = dailyState.questions[dailyState.current];
+  const opts = document.querySelectorAll('.daily-options .option-btn');
+  opts.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.a) {
+      btn.classList.add('correct');
+    } else if (i === idx && i !== q.a) {
+      btn.classList.add('wrong');
+    }
+  });
+
+  if (idx === q.a) {
+    triggerConfetti();
+    tiboHappy();
+  } else {
+    tiboSad();
+  }
+
+  dailyState.correctCount = dailyState.answers.filter((a, i) => a === dailyState.questions[i].a).length;
+
+  // Show explanation if wrong
+  if (idx !== q.a && q.explanation) {
+    const expDiv = document.createElement('div');
+    expDiv.className = 'explanation-panel';
+    expDiv.innerHTML = `
+      <div class="explanation-header">📖 解析</div>
+      <div class="explanation-body">${q.explanation}</div>
+    `;
+    document.querySelector('.daily-options').appendChild(expDiv);
+  }
+}
+
+function dailyNext() {
+  if (dailyState.current < dailyState.questions.length - 1) {
+    dailyState.current++;
+    dailyState.answered = false;
+    renderDailyQuestion();
+  } else {
+    finishDailyPractice();
+  }
+}
+
+function dailyPrev() {
+  if (dailyState.current > 0) {
+    dailyState.current--;
+    dailyState.answered = false;
+    renderDailyQuestion();
+  }
+}
+function renderDailyResult(score, time, correctCount, isAlreadyCompleted) {
+  const container = document.getElementById('daily-content');
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  const timeStr = minutes > 0 ? `${minutes}分${seconds}秒` : `${seconds}秒`;
+  const isGood = correctCount >= 8;
+
+  container.innerHTML = `
+    <div class="daily-result-card">
+      <h2 style="color:var(--primary-dark);margin-bottom:20px">${isAlreadyCompleted ? '✅ 今日已完成' : '🎉 练习完成！'}</h2>
+      <div class="daily-score">${score}分</div>
+      <div class="daily-time">用时：${timeStr} | 正确：${correctCount}/10</div>
+      <div class="daily-message ${isGood ? 'success' : 'fail'}">
+        ${isGood ? '🌟 太棒了！继续保持！' : '💪 加油！明天继续努力！'}
+        <div style="margin-top:8px;font-size:0.85rem">已连续打卡 ${state.daily.streak} 天 🔥</div>
+      </div>
+      <div class="action-row" style="margin-top:24px">
+        <button class="action-btn secondary" onclick="switchPage('quiz')">返回练习</button>
+        <button class="action-btn primary" onclick="showDailyPractice()">查看详情</button>
+      </div>
+    </div>
+  `;
+}
+
 function showSubjectModal() {
   const modal = document.getElementById('subject-modal');
   const list = document.getElementById('subject-list');
@@ -1713,6 +2115,42 @@ function renderStats() {
 // ============================================================
 // Theme
 // ============================================================
+// ============================================================
+// Language Switch
+// ============================================================
+let currentLang = localStorage.getItem('tibo_lang') || 'zh';
+const i18n = {
+  zh: { title: '题宝', subtitle: '智能刷题助手', tabs: ['刷刷刷','题海','查漏','宝藏','战绩','每日练'], next: '下一题', prev: '上一题', collect: '收藏', uncollect: '已收藏', search: '搜索题目...', dailyTitle: '每日一练', dailyDesc: '每天随机抽取10道题，坚持打卡提升学习效果', dailyStart: '开始今日练习', dailyDone: '今天已完成每日一练！', dailyComeBack: '明天再来挑战新的题目吧', resultTitle: '练习完成！', resultDone: '今日已完成', correct: '正确', time: '用时', streak: '已连续打卡', days: '天', back: '返回练习', detail: '查看详情', goodJob: '太棒了！继续保持！', keepUp: '加油！明天继续努力！', explanation: '解析', viewExp: '查看解析', clearWrong: '清空错题本', noWrong: '暂无错题，继续保持！', noFav: '暂无收藏题目', statsTitle: '学习统计', totalDone: '总答题数', correctRate: '正确率', wrongCount: '错题数', favCount: '收藏数', todayDone: '今日答题', streakDays: '连续打卡', settings: '设置', about: '关于题宝', version: '版本', builtWith: '构建于 2025', importQ: '导入题库', exportQ: '导出数据', reset: '重置所有数据', resetConfirm: '确定要重置所有数据吗？此操作不可撤销！', theme: '主题', light: '浅色', dark: '深色', auto: '自动', swipeHint: '← 左右滑动切换题目 →' },
+  en: { title: 'TiBo', subtitle: 'Smart Quiz Helper', tabs: ['Quiz','Bank','Review','Fav','Stats','Daily'], next: 'Next', prev: 'Prev', collect: 'Save', uncollect: 'Saved', search: 'Search questions...', dailyTitle: 'Daily Practice', dailyDesc: '10 random questions daily. Keep practicing!', dailyStart: 'Start Today', dailyDone: "You've completed today's practice!", dailyComeBack: 'Come back tomorrow for more!', resultTitle: 'Practice Complete!', resultDone: 'Completed Today', correct: 'Correct', time: 'Time', streak: 'Streak', days: 'days', back: 'Back to Quiz', detail: 'Details', goodJob: 'Great job! Keep it up!', keepUp: "Keep going! You'll do better tomorrow!", explanation: 'Explanation', viewExp: 'View Explanation', clearWrong: 'Clear Wrong Book', noWrong: 'No wrong answers yet, keep it up!', noFav: 'No saved questions yet', statsTitle: 'Statistics', totalDone: 'Total Answered', correctRate: 'Accuracy', wrongCount: 'Wrong', favCount: 'Saved', todayDone: 'Today', streakDays: 'Streak', settings: 'Settings', about: 'About TiBo', version: 'Version', builtWith: 'Built in 2025', importQ: 'Import Questions', exportQ: 'Export Data', reset: 'Reset All Data', resetConfirm: 'Are you sure? This cannot be undone!', theme: 'Theme', light: 'Light', dark: 'Dark', auto: 'Auto', swipeHint: '← Swipe to switch →' }
+};
+
+function toggleLanguage() {
+  currentLang = currentLang === 'zh' ? 'en' : 'zh';
+  localStorage.setItem('tibo_lang', currentLang);
+  applyLanguage();
+  const btn = document.getElementById('lang-switch-btn');
+  if (btn) btn.textContent = currentLang === 'zh' ? '中' : 'En';
+}
+
+function applyLanguage() {
+  const t = i18n[currentLang];
+  if (!t) return;
+  const titleMain = document.querySelector('.title-main');
+  if (titleMain) titleMain.textContent = t.title;
+  document.title = `${t.title}~TiBo - ${t.subtitle}`;
+  const tabLabels = document.querySelectorAll('.nav-label');
+  tabLabels.forEach((label, i) => { if (t.tabs[i]) label.textContent = t.tabs[i]; });
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) searchInput.placeholder = t.search;
+  const swipeHint = document.querySelector('.swipe-hint');
+  if (swipeHint) swipeHint.textContent = t.swipeHint;
+}
+
+applyLanguage();
+
+// ============================================================
+// Theme Toggle
+// ============================================================
 function toggleTheme() {
   state.theme = state.theme === 'light' ? 'dark' : 'light';
   document.documentElement.setAttribute('data-theme', state.theme);
@@ -1928,4 +2366,608 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+
+// ============================================================
+// Daily Practice (每日一练)
+// ============================================================
+let dailyState = {
+  questions: [],
+  currentIndex: 0,
+  answers: [],
+  startTime: 0,
+  completed: false
+};
+
+function getDailySeed() {
+  const now = new Date();
+  return now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+}
+
+function seededRandom(seed) {
+  let s = seed;
+  return function() {
+    s = (s * 16807 + 0) % 2147483647;
+    return (s - 1) / 2147483646;
+  };
+}
+
+function getDailyQuestions() {
+  const seed = getDailySeed();
+  const rng = seededRandom(seed);
+  const all = [...defaultQuestions];
+  // Fisher-Yates shuffle with seeded random
+  for (let i = all.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [all[i], all[j]] = [all[j], all[i]];
+  }
+  return all.slice(0, 10);
+}
+
+function isDailyDone() {
+  const key = 'tibo_daily_done_' + getDailySeed();
+  return localStorage.getItem(key) === 'true';
+}
+
+function markDailyDone() {
+  const key = 'tibo_daily_done_' + getDailySeed();
+  localStorage.setItem(key, 'true');
+}
+
+function getDailyStreak() {
+  const streak = parseInt(localStorage.getItem('tibo_daily_streak') || '0');
+  return streak;
+}
+
+function setDailyStreak(val) {
+  localStorage.setItem('tibo_daily_streak', String(val));
+}
+
+function updateDailyStreak() {
+  const today = getDailySeed();
+  const lastDay = parseInt(localStorage.getItem('tibo_daily_last_day') || '0');
+  let streak = getDailyStreak();
+
+  if (today !== lastDay) {
+    // Check if yesterday was done
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdaySeed = yesterday.getFullYear() * 10000 + (yesterday.getMonth() + 1) * 100 + yesterday.getDate();
+    const yesterdayDone = localStorage.getItem('tibo_daily_done_' + yesterdaySeed) === 'true';
+
+    if (yesterdayDone && today > lastDay) {
+      // Consecutive day
+      streak += 1;
+    } else if (today > lastDay) {
+      // Gap - reset streak
+      streak = 1;
+    }
+    setDailyStreak(streak);
+    localStorage.setItem('tibo_daily_last_day', String(today));
+  }
+
+  return streak;
+}
+
+function renderDailyCalendar() {
+  const container = document.getElementById('daily-calendar');
+  if (!container) return;
+  container.innerHTML = '';
+  const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+  const today = new Date();
+
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const seed = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+    const done = localStorage.getItem('tibo_daily_done_' + seed) === 'true';
+    const isToday = i === 0;
+
+    const div = document.createElement('div');
+    div.className = 'cal-day' + (done ? ' done' : '') + (isToday ? ' today' : '');
+    div.innerHTML = `<span class="cal-weekday">${weekdays[d.getDay()]}</span><span>${d.getDate()}</span>`;
+    container.appendChild(div);
+  }
+}
+
+function renderDailyPage() {
+  const streak = updateDailyStreak();
+  const streakNum = document.getElementById('daily-streak-num');
+  if (streakNum) streakNum.textContent = streak;
+
+  renderDailyCalendar();
+
+  const contentEl = document.getElementById('daily-content');
+  const startBtn = document.getElementById('daily-start-btn');
+
+  if (isDailyDone()) {
+    // Show result
+    showDailyResult();
+    if (startBtn) startBtn.style.display = 'none';
+  } else {
+    if (startBtn) {
+      startBtn.style.display = 'block';
+      startBtn.disabled = false;
+      startBtn.textContent = '\u5f00\u59cb\u4eca\u65e5\u7ec3\u4e60';
+    }
+    // Remove any old result
+    const oldResult = contentEl.querySelector('.daily-result');
+    if (oldResult) oldResult.remove();
+  }
+}
+
+function showDailyPractice() {
+  const container = document.getElementById('daily-content');
+  const today = getTodayDate();
+  const alreadyCompleted = state.daily.completedDates.includes(today);
+
+  if (alreadyCompleted) {
+    const dailyData = JSON.parse(localStorage.getItem(`tibo_daily_${today}`) || '{}');
+    if (dailyData.score !== undefined) {
+      renderDailyResult(dailyData.score, dailyData.time, dailyData.correctCount, true);
+    } else {
+      container.innerHTML = `
+        <div class="daily-card">
+          <h2>&#128198; 每日一练</h2>
+          <div class="daily-streak-badge">
+            <span>&#128293;</span>
+            <span>已连续打卡 ${state.daily.streak} 天</span>
+          </div>
+          <p style="margin-top:16px">&#9989; 今天已完成每日一练！</p>
+          <p style="margin-top:8px;font-size:0.9rem;opacity:0.9">明天再来挑战新的题目吧</p>
+          <button class="daily-start-btn" onclick="switchPage('quiz')">返回练习</button>
+        </div>
+      `;
+    }
+  } else {
+    container.innerHTML = `
+      <div class="daily-card">
+        <h2>&#128198; 每日一练</h2>
+        <div class="daily-streak-badge">
+          <span>&#128293;</span>
+          <span>已连续打卡 ${state.daily.streak} 天</span>
+        </div>
+        <p style="margin-top:12px">每天随机抽取10道题，坚持打卡提升学习效果</p>
+        <button class="daily-start-btn" onclick="startDailyPractice()">开始今日练习</button>
+      </div>
+    `;
+  }
+}
+
+function startDailyPractice() {
+  if (isDailyDone()) return;
+
+  dailyState.questions = getDailyQuestions();
+  dailyState.currentIndex = 0;
+  dailyState.answers = [];
+  dailyState.startTime = Date.now();
+  dailyState.completed = false;
+
+  const startBtn = document.getElementById('daily-start-btn');
+  if (startBtn) startBtn.style.display = 'none';
+
+  renderDailyQuestion();
+}
+
+function renderDailyQuestion() {
+  const contentEl = document.getElementById('daily-content');
+  if (!contentEl) return;
+
+  const q = dailyState.questions[dailyState.currentIndex];
+  const idx = dailyState.currentIndex;
+  const total = dailyState.questions.length;
+  const isAnswered = dailyState.answers[idx] !== undefined;
+
+  const labels = ['A', 'B', 'C', 'D'];
+
+  let html = `
+    <div class="question-card" id="daily-question-card" style="animation:cardEnter 0.4s ease">
+      <div class="question-number">\u6bcf\u65e5\u7ec3\u4e60 \u7b2c ${idx + 1} / ${total} \u9898</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options-list" id="daily-options-list">
+  `;
+
+  q.o.forEach((opt, i) => {
+    let cls = 'option-btn';
+    if (isAnswered) {
+      cls += ' disabled';
+      if (i === q.a) cls += ' correct';
+      if (i === dailyState.answers[idx] && i !== q.a) cls += ' wrong';
+    }
+    html += `<button class="${cls}" onclick="selectDailyOption(${i})">
+      <span class="option-label">${labels[i]}</span>
+      <span class="option-text">${opt}</span>
+    </button>`;
+  });
+
+  html += `</div>`;
+
+  // Explanation (show after answering if wrong)
+  if (isAnswered && q.r) {
+    html += `<div class="explanation show">
+      <div class="explanation-title">\u89e3\u6790</div>
+      <div class="explanation-text">${q.r}</div>
+    </div>`;
+  } else if (isAnswered && dailyState.answers[idx] !== q.a) {
+    html += `<button class="view-explain-btn" onclick="showDailyExplanation()">\u67e5\u770b\u89e3\u6790</button>
+    <div class="explanation" id="daily-explanation">
+      <div class="explanation-title">\u89e3\u6790</div>
+      <div class="explanation-text">${q.r || '\u6682\u65e0\u89e3\u6790'}</div>
+    </div>`;
+  }
+
+  html += `</div>`;
+
+  // Progress bar for daily
+  const pct = Math.round((idx / total) * 100);
+  html += `<div class="progress-container" style="max-width:632px;margin:0 auto 12px">
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="progress-text">${idx} / ${total}</div>
+  </div>`;
+
+  contentEl.innerHTML = html;
+}
+
+function showDailyExplanation() {
+  const expEl = document.getElementById('daily-explanation');
+  if (expEl) expEl.classList.add('show');
+}
+
+function selectDailyOption(index) {
+  const idx = dailyState.currentIndex;
+  if (dailyState.answers[idx] !== undefined) return;
+
+  dailyState.answers[idx] = index;
+
+  const q = dailyState.questions[idx];
+  const isCorrect = index === q.a;
+
+  if (isCorrect) {
+    triggerConfetti();
+    triggerHaptic('correct');
+    tiboDailyCorrect();
+  } else {
+    triggerHaptic('wrong');
+    tiboCheer();
+  }
+
+  // Re-render to show correct/wrong states
+  renderDailyQuestion();
+
+  // Auto advance after delay
+  setTimeout(() => {
+    if (dailyState.currentIndex < dailyState.questions.length - 1) {
+      dailyState.currentIndex++;
+      renderDailyQuestion();
+    } else {
+      finishDailyPractice();
+    }
+  }, isCorrect ? 1200 : 2000);
+}
+
+function tiboDailyCorrect() {
+  // TIBO celebration animation + star particles
+  const mascot = document.getElementById('tibo-mascot');
+  if (mascot) {
+    mascot.classList.add('tibo-celebrate');
+    // Create star particles
+    for (let i = 0; i < 6; i++) {
+      const star = document.createElement('div');
+      star.className = 'star-particle';
+      const angle = (i / 6) * Math.PI * 2;
+      const dist = 30 + Math.random() * 20;
+      star.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+      star.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+      star.style.left = '40px';
+      star.style.top = '40px';
+      star.style.background = ['#7EC8C9', '#FFD700', '#FF8A65', '#BA68C8', '#64B5F6', '#B5DCD9'][i];
+      mascot.appendChild(star);
+      setTimeout(() => star.remove(), 800);
+    }
+    setTimeout(() => mascot.classList.remove('tibo-celebrate'), 1000);
+  }
+
+  // Show happy message
+  const bubble = document.getElementById('tibo-bubble');
+  if (bubble) {
+    const msgs = ['\u7b54\u5bf9\u4e86\uff01\u592a\u68d2\u4e86\uff01', '\u5b8c\u7f8e\uff01\u7ee7\u7eed\u52a0\u6cb9\uff01', '\u6ca1\u9519\uff01\u4f60\u771f\u806a\u660e\uff01', '\u6b63\u786e\uff01\u5f3a\u5927\uff01'];
+    bubble.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+    bubble.style.animation = 'none';
+    bubble.offsetHeight;
+    bubble.style.animation = 'bounceIn 0.5s ease';
+  }
+}
+
+function finishDailyPractice() {
+  dailyState.completed = true;
+  const elapsed = Math.round((Date.now() - dailyState.startTime) / 1000);
+  const total = dailyState.questions.length;
+  let correct = 0;
+  dailyState.answers.forEach((ans, i) => {
+    if (ans === dailyState.questions[i].a) correct++;
+  });
+  const rate = Math.round(correct / total * 100);
+
+  // Save result
+  const result = { correct, total, rate, time: elapsed, date: getDailySeed() };
+  localStorage.setItem('tibo_daily_result_' + getDailySeed(), JSON.stringify(result));
+  markDailyDone();
+
+  // Update streak
+  const streak = updateDailyStreak();
+  const streakNum = document.getElementById('daily-streak-num');
+  if (streakNum) streakNum.textContent = streak;
+  renderDailyCalendar();
+
+  // Show TIBO special message
+  showDailyTiboMessage(streak);
+
+  // Show result
+  showDailyResult(correct, total, rate, elapsed, streak);
+}
+
+function showDailyResult(correct, total, rate, elapsed, streak) {
+  const contentEl = document.getElementById('daily-content');
+  if (!contentEl) return;
+
+  // If no params, load from localStorage
+  if (correct === undefined) {
+    const saved = localStorage.getItem('tibo_daily_result_' + getDailySeed());
+    if (saved) {
+      const r = JSON.parse(saved);
+      correct = r.correct;
+      total = r.total;
+      rate = r.rate;
+      elapsed = r.time;
+      streak = getDailyStreak();
+    }
+  }
+
+  const minutes = Math.floor(elapsed / 60);
+  const seconds = elapsed % 60;
+  const timeStr = minutes > 0 ? `${minutes}\u5206${seconds}\u79d2` : `${seconds}\u79d2`;
+
+  // TIBO message
+  let tiboMsg = '\u52a0\u6cb9\uff0c\u4f60\u662f\u6700\u68d2\u7684\uff01';
+  if (streak >= 7) {
+    tiboMsg = '\u4e00\u5468\u5168\u52e4\uff01\u4f60\u662f\u5237\u9898\u8fbe\u4eba\uff01\U0001f3c6';
+  } else if (streak >= 3) {
+    tiboMsg = '\u575a\u6301\u5c31\u662f\u80dc\u5229\uff01\U0001f525';
+  }
+
+  contentEl.innerHTML = `
+    <div class="daily-result">
+      <h3>\u4eca\u65e5\u7ec3\u4e60\u5b8c\u6210\uff01</h3>
+      <div class="daily-score">${rate}<span style="font-size:20px">%</span></div>
+      <div class="daily-stats-row">
+        <div class="daily-stat-item">
+          <div class="daily-stat-value">${correct}/${total}</div>
+          <div class="daily-stat-label">\u6b63\u786e/\u603b\u9898</div>
+        </div>
+        <div class="daily-stat-item">
+          <div class="daily-stat-value">${timeStr}</div>
+          <div class="daily-stat-label">\u7528\u65f6</div>
+        </div>
+        <div class="daily-stat-item">
+          <div class="daily-stat-value">${streak}\u5929</div>
+          <div class="daily-stat-label">\u8fde\u7eed\u6253\u5361</div>
+        </div>
+      </div>
+      <div class="daily-tibo-msg">${tiboMsg}</div>
+    </div>
+    <button class="daily-start-btn" style="animation-delay:0.5s" onclick="switchPage('daily')">\u67e5\u770b\u6253\u5361\u65e5\u5386</button>
+  `;
+}
+
+function showDailyTiboMessage(streak) {
+  const bubble = document.getElementById('tibo-bubble');
+  if (!bubble) return;
+
+  let msg;
+  if (streak >= 7) {
+    msg = '\u4e00\u5468\u5168\u52e4\uff01\u4f60\u662f\u5237\u9898\u8fbe\u4eba\uff01\U0001f3c6';
+  } else if (streak >= 3) {
+    msg = '\u575a\u6301\u5c31\u662f\u80dc\u5229\uff01\U0001f525';
+  } else {
+    msg = '\u4eca\u5929\u4e5f\u5b8c\u6210\u4e86\uff01\u7ee7\u7eed\u52a0\u6cb9\uff01';
+  }
+
+  bubble.textContent = msg;
+  bubble.style.animation = 'none';
+  bubble.offsetHeight;
+  bubble.style.animation = 'bounceIn 0.5s ease';
+
+  // TIBO celebration
+  const mascot = document.getElementById('tibo-mascot');
+  if (mascot) {
+    mascot.classList.add('tibo-celebrate');
+    for (let i = 0; i < 8; i++) {
+      const star = document.createElement('div');
+      star.className = 'star-particle';
+      const angle = (i / 8) * Math.PI * 2;
+      const dist = 35 + Math.random() * 25;
+      star.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+      star.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+      star.style.left = '40px';
+      star.style.top = '40px';
+      star.style.background = ['#7EC8C9', '#FFD700', '#FF8A65', '#BA68C8', '#64B5F6', '#B5DCD9', '#E8B4B8', '#81C784'][i];
+      mascot.appendChild(star);
+      setTimeout(() => star.remove(), 800);
+    }
+    setTimeout(() => mascot.classList.remove('tibo-celebrate'), 1000);
+  }
+}
+
+// ============================================================
+// Enhanced Swipe Gesture with Page Transition Animation
+// ============================================================
+function initSwipeGesture() {
+  let startX = 0, startY = 0, isDragging = false;
+  const card = document.getElementById('question-card');
+  card.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isDragging = true;
+  }, { passive: true });
+  card.addEventListener('touchend', e => {
+    if (!isDragging) return;
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    const diffX = endX - startX;
+    const diffY = endY - startY;
+    if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX < 0) swipeToQuestion('next');
+      else swipeToQuestion('prev');
+    }
+    isDragging = false;
+  }, { passive: true });
+  // Mouse swipe for desktop
+  card.addEventListener('mousedown', e => {
+    startX = e.clientX; startY = e.clientY; isDragging = true;
+  });
+  card.addEventListener('mouseup', e => {
+    if (!isDragging) return;
+    const diffX = e.clientX - startX;
+    const diffY = e.clientY - startY;
+    if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX < 0) swipeToQuestion('next');
+      else swipeToQuestion('prev');
+    }
+    isDragging = false;
+  });
+}
+
+function swipeToQuestion(direction) {
+  const card = document.getElementById('question-card');
+  if (!card) return;
+
+  const outClass = direction === 'next' ? 'swipe-left-out' : 'swipe-right-out';
+  const inClass = direction === 'next' ? 'swipe-left-in' : 'swipe-right-in';
+
+  card.classList.add(outClass);
+
+  setTimeout(() => {
+    if (direction === 'next') nextQuestion();
+    else prevQuestion();
+
+    card.classList.remove(outClass);
+    card.classList.add(inClass);
+
+    setTimeout(() => {
+      card.classList.remove(inClass);
+    }, 300);
+  }, 250);
+}
+
+// ============================================================
+// Enhanced selectOption with TIBO celebration
+// ============================================================
+function selectOption(index) {
+  const questions = getCurrentQuestions();
+  const q = questions[state.currentIndex];
+  const subId = state.currentSubject;
+
+  if (state.answered[subId]?.has(state.currentIndex)) return;
+
+  // Init sets
+  if (!state.answered[subId]) state.answered[subId] = new Set();
+  if (!state.stats[subId]) state.stats[subId] = { correct:0, total:0, history:[] };
+
+  state.answered[subId].add(state.currentIndex);
+  state.stats[subId].total++;
+
+  const isCorrect = index === q.a;
+  if (isCorrect) {
+    state.stats[subId].correct++;
+    triggerConfetti();
+    triggerHaptic('correct');
+    tiboHappy();
+    // TIBO celebration animation
+    tiboAnswerCelebration();
+  } else {
+    state.stats[subId].wrong = (state.stats[subId].wrong || 0) + 1;
+    // Add to wrong book
+    if (!state.wrongBook[subId]) state.wrongBook[subId] = [];
+    if (!state.wrongBook[subId].includes(state.currentIndex)) {
+      state.wrongBook[subId].push(state.currentIndex);
+    }
+    triggerHaptic('wrong');
+    tiboCheer();
+  }
+
+  // Update history
+  state.stats[subId].history.push(isCorrect ? 1 : 0);
+  if (state.stats[subId].history.length > 100) state.stats[subId].history.shift();
+
+  saveState();
+
+  // Update UI
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach((btn, i) => {
+    btn.classList.add('disabled');
+    if (i === q.a) btn.classList.add('correct');
+    if (i === index && !isCorrect) btn.classList.add('wrong');
+  });
+
+  // Show explanation
+  if (q.r) {
+    document.getElementById('explanation-text').textContent = q.r;
+    document.getElementById('explanation').classList.add('show');
+  }
+
+  // If wrong, show "view explanation" button if not already visible
+  if (!isCorrect && !q.r) {
+    const optList = document.getElementById('options-list');
+    if (optList && !optList.querySelector('.view-explain-btn')) {
+      const viewBtn = document.createElement('button');
+      viewBtn.className = 'view-explain-btn';
+      viewBtn.textContent = '\u67e5\u770b\u89e3\u6790';
+      viewBtn.onclick = function() {
+        const expEl = document.getElementById('explanation');
+        if (expEl) {
+          document.getElementById('explanation-text').textContent = q.r || '\u6682\u65e0\u89e3\u6790';
+          expEl.classList.add('show');
+        }
+        viewBtn.style.display = 'none';
+      };
+      optList.parentNode.insertBefore(viewBtn, optList.nextSibling);
+    }
+  }
+
+  updateProgress();
+}
+
+function tiboAnswerCelebration() {
+  const mascot = document.getElementById('tibo-mascot');
+  if (!mascot) return;
+
+  mascot.classList.add('tibo-celebrate');
+
+  // Star burst particles
+  for (let i = 0; i < 6; i++) {
+    const star = document.createElement('div');
+    star.className = 'star-particle';
+    const angle = (i / 6) * Math.PI * 2;
+    const dist = 30 + Math.random() * 20;
+    star.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+    star.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+    star.style.left = '40px';
+    star.style.top = '40px';
+    star.style.background = ['#7EC8C9', '#FFD700', '#FF8A65', '#BA68C8', '#64B5F6', '#B5DCD9'][i];
+    mascot.appendChild(star);
+    setTimeout(() => star.remove(), 800);
+  }
+
+  setTimeout(() => mascot.classList.remove('tibo-celebrate'), 1000);
+}
+
+// ============================================================
+// Override switchPage to include daily page
+// ============================================================
+const _origSwitchPage = switchPage;
+switchPage = function(page) {
+  _origSwitchPage(page);
+  if (page === 'daily') renderDailyPage();
+};
+
+
 </script>
