@@ -145,21 +145,115 @@
         .options{list-style:none;display:flex;flex-direction:column;gap:12px}
         .options li{
             padding:16px 20px;background:var(--bg);border:2px solid var(--border);
-            border-radius:14px;cursor:pointer;transition:all .2s;
-            animation:slideUpIn .4s ease-out backwards
+            border-radius:14px;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);
+            animation:slideUpIn .4s ease-out backwards;
+            position:relative;overflow:hidden
         }
         .options li:nth-child(1){animation-delay:.05s}
         .options li:nth-child(2){animation-delay:.1s}
         .options li:nth-child(3){animation-delay:.15s}
         .options li:nth-child(4){animation-delay:.2s}
         .options li:hover:not(.correct):not(.wrong){
-            border-color:var(--primary-light);transform:translateX(4px);
-            background:#e8f5e9
+            border-color:#7EC8C9;transform:scale(1.02) translateY(-2px);
+            background:linear-gradient(135deg,#e8f5e9,#f1f8e9);
+            box-shadow:0 8px 20px rgba(126,200,201,.25)
         }
-        .options li.selected{border-color:var(--primary);background:#e8f5e9}
-        .options li.correct{border-color:var(--success);background:#e8f5e9;color:var(--success)}
-        .options li.wrong{border-color:var(--danger);background:#ffebee;color:var(--danger)}
+        .options li.selected{border-color:#7EC8C9;background:#e8f5e9;transform:scale(1.02)}
+        .options li.correct{
+            border-color:var(--success);background:linear-gradient(135deg,#e8f5e9,#c8e6c9);
+            color:var(--primary-dark);transform:scale(1.02);
+            box-shadow:0 8px 20px rgba(76,175,80,.25)
+        }
+        .options li.wrong{
+            border-color:var(--danger);background:linear-gradient(135deg,#ffebee,#ffcdd2);
+            color:var(--danger);transform:scale(1.02);
+            box-shadow:0 8px 20px rgba(239,83,80,.25)
+        }
+
+        /* TIBO精灵 */
+        .tibo-sprite{
+            position:fixed;top:50%;left:50%;
+            transform:translate(-50%,-50%) scale(0);
+            width:120px;height:120px;
+            background:linear-gradient(135deg,#7EC8C9,#81C784);
+            border-radius:50%;
+            display:flex;align-items:center;justify-content:center;
+            font-size:3rem;color:#fff;
+            box-shadow:0 20px 60px rgba(126,200,201,.5);
+            z-index:9999;opacity:0;
+            transition:all .5s cubic-bezier(.34,1.56,.64,1)
+        }
+        .tibo-sprite.show{
+            transform:translate(-50%,-50%) scale(1);
+            opacity:1;
+            animation:tiboCelebrate 1s ease-out
+        }
+        @keyframes tiboCelebrate{
+            0%{transform:translate(-50%,-50%) scale(0) rotate(-180deg)}
+            50%{transform:translate(-50%,-50%) scale(1.3) rotate(10deg)}
+            70%{transform:translate(-50%,-50%) scale(1.1) rotate(-5deg)}
+            100%{transform:translate(-50%,-50%) scale(1) rotate(0deg)}
+        }
+        .tibo-sprite::after{
+            content:'';position:absolute;
+            width:100%;height:100%;
+            border-radius:50%;
+            border:3px solid rgba(255,255,255,.3);
+            animation:tiboPulse 1.5s ease-out infinite
+        }
+        @keyframes tiboPulse{
+            0%,100%{transform:scale(1);opacity:1}
+            50%{transform:scale(1.2);opacity:0}
+        }
+
+        /* 解析折叠面板 */
+        .explanation-panel{
+            margin-top:16px;border-radius:14px;
+            background:var(--card);border:2px solid var(--border);
+            overflow:hidden;transition:all .3s ease
+        }
+        .explanation-panel-header{
+            padding:12px 16px;background:linear-gradient(135deg,#7EC8C9,#81C784);
+            color:#fff;cursor:pointer;display:flex;
+            align-items:center;justify-content:space-between;
+            font-size:.95rem;font-weight:600;
+            transition:all .2s
+        }
+        .explanation-panel-header:hover{background:linear-gradient(135deg,#81C784,#7EC8C9)}
+        .explanation-panel-header .arrow{
+            transition:transform .3s;font-size:1.2rem
+        }
+        .explanation-panel.collapsed .arrow{transform:rotate(-90deg)}
+        .explanation-panel-content{
+            padding:16px;line-height:1.6;font-size:.9rem;
+            color:var(--text);max-height:200px;
+            transition:max-height .3s ease,opacity .3s ease;
+            overflow:hidden
+        }
+        .explanation-panel.collapsed .explanation-panel-content{
+            max-height:0;padding:0 16px;opacity:0
+        }
         
+        /* 滑动手势 */
+        .swipe-hint{
+            position:absolute;top:50%;transform:translateY(-50%);
+            opacity:.3;font-size:1.5rem;pointer-events:none;
+            transition:all .3s
+        }
+        .swipe-hint.left{left:10px}
+        .swipe-hint.right{right:10px}
+        .swipe-indicator{
+            position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+            display:flex;gap:8px;font-size:.8rem;color:var(--text-light)
+        }
+
+        /* 滑动过渡动画 */
+        .swipe-transition{
+            transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .3s ease
+        }
+        .swipe-left{transform:translateX(-20px);opacity:.8}
+        .swipe-right{transform:translateX(20px);opacity:.8}
+
         /* 结果反馈 */
         .result{margin-top:20px;padding:20px;border-radius:16px;text-align:center}
         .result.pass{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);color:var(--primary-dark)}
@@ -244,6 +338,61 @@
             .stats{grid-template-columns:repeat(2,1fr)}
             .actions{flex-direction:column}
         }
+
+        /* 每日一练样式 */
+        .daily-practice-card{
+            background:linear-gradient(135deg,#4CAF50,#81C784);
+            padding:32px;border-radius:20px;
+            box-shadow:0 8px 30px rgba(76,175,80,0.3);
+            color:#fff;text-align:center;
+            margin-bottom:24px;animation:slideUpIn .6s ease-out
+        }
+        .daily-practice-card h2{font-size:1.5rem;margin-bottom:12px}
+        .daily-practice-card .streak-badge{
+            display:inline-flex;align-items:center;gap:8px;
+            background:rgba(255,255,255,.2);padding:8px 16px;
+            border-radius:12px;font-size:.9rem;margin-bottom:20px;
+            backdrop-filter:blur(8px)
+        }
+        .daily-practice-card .streak-badge .fire{font-size:1.2rem}
+        .daily-practice-card .start-btn{
+            background:#fff;color:var(--primary-dark);
+            border:none;padding:14px 32px;border-radius:14px;
+            cursor:pointer;font-size:1rem;font-weight:600;
+            transition:all .2s;margin-top:16px
+        }
+        .daily-practice-card .start-btn:hover{
+            transform:translateY(-2px);
+            box-shadow:0 4px 15px rgba(255,255,255,.3)
+        }
+        .daily-practice-card .start-btn:disabled{
+            opacity:.5;cursor:not-allowed;transform:none
+        }
+        .daily-result-card{
+            background:var(--card);padding:28px;border-radius:20px;
+            box-shadow:var(--shadow);text-align:center;
+            margin-bottom:24px;border:1px solid var(--border);
+            animation:slideUpIn .6s ease-out
+        }
+        .daily-result-card .score-display{
+            font-size:3rem;font-weight:700;color:var(--primary);
+            margin-bottom:12px
+        }
+        .daily-result-card .time-display{
+            color:var(--text-light);font-size:1rem;margin-bottom:20px
+        }
+        .daily-result-card .result-message{
+            padding:16px;border-radius:12px;margin-top:16px;
+            font-size:.95rem
+        }
+        .daily-result-card .result-message.success{
+            background:linear-gradient(135deg,#e8f5e9,#c8e6c9);
+            color:var(--primary-dark)
+        }
+        .daily-result-card .result-message.fail{
+            background:linear-gradient(135deg,#ffebee,#ffcdd2);
+            color:var(--danger)
+        }
     </style>
 </head>
 <body>
@@ -256,6 +405,7 @@
                 </div>
             </div>
             <div class="nav">
+                <button onclick="showDailyPractice()">📅 每日一练</button>
                 <button onclick="showImport()">📥 导入题目</button>
                 <button onclick="resetProgress()">🔄 重置进度</button>
                 <button onclick="toggleTheme()">🌓 切换主题</button>
@@ -276,8 +426,8 @@
                 <p id="accuracy">0%</p>
             </div>
             <div class="stat-card">
-                <h3>连续正确</h3>
-                <p id="streak">0</p>
+                <h3>连续打卡</h3>
+                <p id="dailyStreak">0天</p>
             </div>
         </div>
         
@@ -314,6 +464,9 @@
 
     <!-- Toast 容器 -->
     <div class="toast-container" id="toastContainer"></div>
+
+    <!-- TIBO精灵 -->
+    <div class="tibo-sprite" id="tiboSprite">🌱</div>
 
     <script>
         // ===== 数据 & 状态 =====
@@ -422,7 +575,7 @@
 ];
 
 
-        let state = {subjects:[],currentSubject:null,currentQuestions:[],currentIndex:0,answers:{},stats:{total:0,correct:0,streak:0,maxStreak:0}};
+        let state = {subjects:[],currentSubject:null,currentQuestions:[],currentIndex:0,answers:{},stats:{total:0,correct:0,streak:0,maxStreak:0},daily:{streak:0,lastDate:'',completedDates:[]}};
 
         function init(){
             loadState();
@@ -437,7 +590,10 @@
                 const parsed = JSON.parse(saved);
                 state.subjects = parsed.subjects || [];
                 state.stats = parsed.stats || state.stats;
+                state.daily = parsed.daily || state.daily;
             }
+            // 更新连续打卡天数
+            updateDailyStreak();
             if(state.subjects.length === 0){
                 state.subjects = [...defaultSubjects];
                 // 分配题目到各科目
@@ -458,7 +614,35 @@
         }
 
         function saveState(){
-            localStorage.setItem('tibo_state',JSON.stringify({subjects:state.subjects,stats:state.stats}));
+            localStorage.setItem('tibo_state',JSON.stringify({subjects:state.subjects,stats:state.stats,daily:state.daily}));
+        }
+
+        // 更新连续打卡天数
+        function updateDailyStreak(){
+            const today = getTodayDate();
+            const yesterday = getYesterdayDate();
+
+            if(state.daily.lastDate === today){
+                // 今天已打卡，保持当前连续天数
+            } else if(state.daily.lastDate === yesterday){
+                // 昨天打卡了，今天未打卡，连续天数保持
+            } else if(state.daily.lastDate !== today && state.daily.lastDate !== yesterday){
+                // 断签了，重置连续天数
+                state.daily.streak = 0;
+            }
+        }
+
+        // 获取今天的日期字符串
+        function getTodayDate(){
+            const now = new Date();
+            return `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
+        }
+
+        // 获取昨天的日期字符串
+        function getYesterdayDate(){
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            return `${yesterday.getFullYear()}-${yesterday.getMonth()+1}-${yesterday.getDate()}`;
         }
 
         function renderSubjects(){
@@ -480,6 +664,24 @@
             renderSubjects();
             renderQuiz();
             showToast(`已切换到「${name}」`, 'info');
+        }
+
+        function switchSubject(direction){
+            if(state.subjects.length === 0) return;
+            
+            let currentIndex = state.subjects.indexOf(state.currentSubject);
+            if(currentIndex === -1){
+                currentIndex = 0;
+            }
+
+            let newIndex = currentIndex + direction;
+            if(newIndex < 0){
+                newIndex = state.subjects.length - 1;
+            } else if(newIndex >= state.subjects.length){
+                newIndex = 0;
+            }
+
+            selectSubject(state.subjects[newIndex]);
         }
 
         function addSubject(){
@@ -513,47 +715,180 @@
         function renderQuiz(){
             const area = document.getElementById('quizArea');
             if(!state.currentSubject || state.currentQuestions.length === 0){
-                area.innerHTML = `<div class="empty-state"><div class="icon">📖</div><h2>欢迎使用题宝！</h2><p>选择或添加科目开始刷题</p></div>`;
+                const hasSubjects = state.subjects.length > 0;
+                area.innerHTML = `
+                    <div class="quiz-area" id="emptyQuizCard" style="position:relative;overflow:hidden">
+                        ${hasSubjects ? '<span class="swipe-hint right">←</span>' : ''}
+                        ${hasSubjects ? '<span class="swipe-hint left">→</span>' : ''}
+                        <div class="empty-state">
+                            <div class="icon">📖</div>
+                            <h2>欢迎使用题宝！</h2>
+                            <p>${hasSubjects ? '选择科目开始刷题，或左右滑动切换' : '选择或添加科目开始刷题'}</p>
+                        </div>
+                        ${hasSubjects ? `
+                            <div class="swipe-indicator">
+                                <span>← 上一科目</span>
+                                <span>下一科目 →</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                if(hasSubjects){
+                    setupSwipeHandlers('emptyQuizCard', true, true, 'subject');
+                }
                 return;
             }
             const q = state.currentQuestions[state.currentIndex];
             const answered = state.answers[state.currentIndex] !== undefined;
+            const isCorrect = answered && state.answers[state.currentIndex] === q.a;
+
             area.innerHTML = `
-                <div class="quiz-header">
-                    <h2>${state.currentSubject}</h2>
-                    <span class="quiz-meta">第 ${state.currentIndex+1} / ${state.currentQuestions.length} 题</span>
-                </div>
-                <div class="progress-bar"><div class="fill" style="width:${((state.currentIndex+1)/state.currentQuestions.length)*100}%"></div></div>
-                <div class="question" style="margin-top:20px">${q.q}</div>
-                <ul class="options">${q.o.map((opt,i)=>{
-                    let cls = '';
-                    if(answered){
-                        if(i===q.a) cls='correct';
-                        else if(i===state.answers[state.currentIndex]) cls='wrong';
-                    }
-                    return `<li class="${cls}" onclick="${answered?'':'selectAnswer('+i+')'}">${String.fromCharCode(65+i)}. ${opt}</li>`;
-                }).join('')}</ul>
-                ${answered?`<div class="result ${state.answers[state.currentIndex]===q.a?'pass':'fail'}">
-                    <div style="font-size:1.1rem;font-weight:600;margin-bottom:8px">${state.answers[state.currentIndex]===q.a?'✅ 回答正确！':'❌ 回答错误'}</div>
-                    ${q.r?`<div class="explanation"><strong>解析：</strong>${q.r}</div>`:''}
-                </div>`:''}
-                <div class="actions">
-                    ${state.currentIndex>0?'<button class="btn-warning" onclick="prevQuestion()">← 上一题</button>':''}
-                    ${answered?(state.currentIndex<state.currentQuestions.length-1?'<button class="btn-primary" onclick="nextQuestion()">下一题 →</button>':'<button class="btn-success" onclick="finishQuiz()">🏁 完成练习</button>'):''}
+                <div class="quiz-area" id="quizCard" style="position:relative;overflow:hidden">
+                    ${state.currentIndex > 0 ? '<span class="swipe-hint right">←</span>' : ''}
+                    ${state.currentIndex < state.currentQuestions.length - 1 ? '<span class="swipe-hint left">→</span>' : ''}
+                    <div class="quiz-header">
+                        <h2>${state.currentSubject}</h2>
+                        <span class="quiz-meta">第 ${state.currentIndex+1} / ${state.currentQuestions.length} 题</span>
+                    </div>
+                    <div class="progress-bar"><div class="fill" style="width:${((state.currentIndex+1)/state.currentQuestions.length)*100}%"></div></div>
+                    <div class="question" style="margin-top:20px">${q.q}</div>
+                    <ul class="options">${q.o.map((opt,i)=>{
+                        let cls = '';
+                        if(answered){
+                            if(i===q.a) cls='correct';
+                            else if(i===state.answers[state.currentIndex]) cls='wrong';
+                        }
+                        return `<li class="${cls}" onclick="${answered?'':'selectAnswer('+i+')'}">${String.fromCharCode(65+i)}. ${opt}</li>`;
+                    }).join('')}</ul>
+                    ${answered?`
+                        <div class="result ${isCorrect?'pass':'fail'}">
+                            <div style="font-size:1.1rem;font-weight:600;margin-bottom:8px">${isCorrect?'✅ 回答正确！':'❌ 回答错误'}</div>
+                        </div>
+                        ${!isCorrect && q.r?`
+                            <div class="explanation-panel" id="explanationPanel">
+                                <div class="explanation-panel-header" onclick="toggleExplanation()">
+                                    <span>💡 查看解析</span>
+                                    <span class="arrow">▼</span>
+                                </div>
+                                <div class="explanation-panel-content">
+                                    ${q.r}
+                                </div>
+                            </div>
+                        `:''}
+                    `:''}
+                    <div class="actions">
+                        ${state.currentIndex>0?'<button class="btn-warning" onclick="prevQuestion()">← 上一题</button>':''}
+                        ${answered?(state.currentIndex<state.currentQuestions.length-1?'<button class="btn-primary" onclick="nextQuestion()">下一题 →</button>':'<button class="btn-success" onclick="finishQuiz()">🏁 完成练习</button>'):''}
+                    </div>
+                    <div class="swipe-indicator">
+                        <span>← 上一题</span>
+                        <span>下一题 →</span>
+                    </div>
                 </div>
             `;
+
+            setupSwipeHandlers('quizCard', state.currentIndex > 0, state.currentIndex < state.currentQuestions.length - 1, 'quiz');
+        }
+
+        function toggleExplanation(){
+            const panel = document.getElementById('explanationPanel');
+            if(panel){
+                panel.classList.toggle('collapsed');
+            }
+        }
+
+        // ===== 滑动手势功能 =====
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+        const SWIPE_THRESHOLD = 50;
+        const SWIPE_VERTICAL_THRESHOLD = 30;
+
+        function setupSwipeHandlers(elementId, canGoPrev, canGoNext, mode){
+            const element = document.getElementById(elementId);
+            if(!element) return;
+
+            element.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            }, {passive: true});
+
+            element.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].clientX;
+                touchEndY = e.changedTouches[0].clientY;
+                handleSwipe(elementId, canGoPrev, canGoNext, mode);
+            }, {passive: true});
+        }
+
+        function handleSwipe(elementId, canGoPrev, canGoNext, mode){
+            const element = document.getElementById(elementId);
+            const diffX = touchEndX - touchStartX;
+            const diffY = touchEndY - touchStartY;
+
+            if(Math.abs(diffY) > SWIPE_VERTICAL_THRESHOLD){
+                return;
+            }
+
+            if(Math.abs(diffX) < SWIPE_THRESHOLD){
+                return;
+            }
+
+            if(diffX > 0){
+                if(canGoPrev){
+                    showSwipeAnimation(element, 'right');
+                    setTimeout(() => {
+                        if(mode === 'quiz') prevQuestion();
+                        else if(mode === 'daily') prevDailyQuestion();
+                        else if(mode === 'subject') switchSubject(-1);
+                    }, 150);
+                }
+            } else {
+                if(mode === 'subject'){
+                    showSwipeAnimation(element, 'left');
+                    setTimeout(() => {
+                        switchSubject(1);
+                    }, 150);
+                } else if(canGoNext){
+                    const answered = mode === 'quiz' 
+                        ? state.answers[state.currentIndex] !== undefined
+                        : dailyState.answers[dailyState.currentIndex] !== undefined;
+                    if(answered){
+                        showSwipeAnimation(element, 'left');
+                        setTimeout(() => {
+                            if(mode === 'quiz') nextQuestion();
+                            else if(mode === 'daily') nextDailyQuestion();
+                        }, 150);
+                    } else {
+                        showToast('请先选择答案', 'info');
+                    }
+                }
+            }
+        }
+
+        function showSwipeAnimation(element, direction){
+            if(!element) return;
+            element.classList.add('swipe-transition');
+            element.classList.add(direction === 'left' ? 'swipe-left' : 'swipe-right');
+            setTimeout(() => {
+                element.classList.remove('swipe-transition');
+                element.classList.remove('swipe-left');
+                element.classList.remove('swipe-right');
+            }, 300);
         }
 
         function selectAnswer(idx){
             const q = state.currentQuestions[state.currentIndex];
             const correct = idx === q.a;
             state.answers[state.currentIndex] = idx;
-            
+
             if(correct){
                 state.stats.correct++;
                 state.stats.streak++;
                 state.stats.maxStreak = Math.max(state.stats.maxStreak,state.stats.streak);
                 showToast('✨ 回答正确！', 'success');
+                // 播放TIBO精灵庆祝动画
+                showTiboCelebration();
             }else{
                 state.stats.streak = 0;
                 showToast('❌ 回答错误，查看解析', 'error');
@@ -562,6 +897,17 @@
             saveState();
             updateStats();
             renderQuiz();
+        }
+
+        // TIBO精灵庆祝动画
+        function showTiboCelebration(){
+            const tibo = document.getElementById('tiboSprite');
+            if(tibo){
+                tibo.classList.add('show');
+                setTimeout(() => {
+                    tibo.classList.remove('show');
+                }, 1500);
+            }
         }
 
         function nextQuestion(){
@@ -596,7 +942,7 @@
             document.getElementById('totalQuestions').textContent = allQuestions;
             document.getElementById('completedCount').textContent = state.stats.total;
             document.getElementById('accuracy').textContent = state.stats.total?Math.round((state.stats.correct/state.stats.total)*100)+'%':'0%';
-            document.getElementById('streak').textContent = state.stats.maxStreak;
+            document.getElementById('dailyStreak').textContent = state.daily.streak + '天';
         }
 
         function toggleTheme(){
@@ -648,7 +994,15 @@
         function resetProgress(){
             if(confirm('确定重置所有进度？（科目和题目会保留）')){
                 state.stats = {total:0,correct:0,streak:0,maxStreak:0};
+                state.daily = {streak:0,lastDate:'',completedDates:[]};
                 state.answers = {};
+                // 清除每日一练数据
+                const keys = Object.keys(localStorage);
+                keys.forEach(key => {
+                    if(key.startsWith('tibo_daily_')){
+                        localStorage.removeItem(key);
+                    }
+                });
                 saveState();
                 updateStats();
                 renderQuiz();
@@ -669,6 +1023,271 @@
                 toast.classList.remove('show');
                 setTimeout(() => toast.remove(), 400);
             }, 2500);
+        }
+
+        // ===== 每日一练功能 =====
+        let dailyState = {
+            questions: [],
+            currentIndex: 0,
+            answers: {},
+            startTime: null,
+            isCompleted: false
+        };
+
+        // 根据日期生成固定的10道题
+        function getDailyQuestions(){
+            const today = getTodayDate();
+            const allQuestions = defaultQuestions;
+
+            // 使用日期字符串作为种子生成随机序列
+            const seed = hashCode(today);
+            const shuffled = seededShuffle(allQuestions, seed);
+
+            // 取前10道题
+            return shuffled.slice(0, 10);
+        }
+
+        // 字符串哈希函数
+        function hashCode(str){
+            let hash = 0;
+            for(let i = 0; i < str.length; i++){
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            return Math.abs(hash);
+        }
+
+        // 基于种子的洗牌算法（确保每天题目相同）
+        function seededShuffle(array, seed){
+            const result = array.slice();
+            let m = result.length;
+
+            while(m){
+                seed = (seed * 16807) % 2147483647;
+                const i = seed % m--;
+                [result[m], result[i]] = [result[i], result[m]];
+            }
+
+            return result;
+        }
+
+        // 显示每日一练界面
+        function showDailyPractice(){
+            const area = document.getElementById('quizArea');
+            const today = getTodayDate();
+            const alreadyCompleted = state.daily.completedDates.includes(today);
+
+            if(alreadyCompleted){
+                // 今天已完成，显示结果
+                const dailyData = JSON.parse(localStorage.getItem(`tibo_daily_${today}`) || '{}');
+                if(dailyData.score !== undefined){
+                    showDailyResult(dailyData.score, dailyData.time, dailyData.correctCount, true);
+                } else {
+                    area.innerHTML = `
+                        <div class="daily-practice-card">
+                            <h2>📅 每日一练</h2>
+                            <div class="streak-badge">
+                                <span class="fire">🔥</span>
+                                <span>已连续打卡 ${state.daily.streak} 天</span>
+                            </div>
+                            <p style="margin-top:20px">✅ 今天已完成每日一练！</p>
+                            <p style="margin-top:8px;font-size:.9rem">明天再来挑战新的题目吧</p>
+                            <button class="start-btn" onclick="renderQuiz()">返回练习</button>
+                        </div>
+                    `;
+                }
+            } else {
+                // 今天未完成
+                area.innerHTML = `
+                    <div class="daily-practice-card">
+                        <h2>📅 每日一练</h2>
+                        <div class="streak-badge">
+                            <span class="fire">🔥</span>
+                            <span>已连续打卡 ${state.daily.streak} 天</span>
+                        </div>
+                        <p style="margin-top:12px">每天随机抽取10道题，坚持打卡提升学习效果</p>
+                        <button class="start-btn" onclick="startDailyPractice()">开始今日练习</button>
+                    </div>
+                `;
+            }
+        }
+
+        // 开始每日一练
+        function startDailyPractice(){
+            dailyState.questions = getDailyQuestions();
+            dailyState.currentIndex = 0;
+            dailyState.answers = {};
+            dailyState.startTime = Date.now();
+            dailyState.isCompleted = false;
+
+            renderDailyQuestion();
+        }
+
+        // 渲染每日一练题目
+        function renderDailyQuestion(){
+            const area = document.getElementById('quizArea');
+            const q = dailyState.questions[dailyState.currentIndex];
+            const answered = dailyState.answers[dailyState.currentIndex] !== undefined;
+            const isCorrect = answered && dailyState.answers[dailyState.currentIndex] === q.a;
+
+            area.innerHTML = `
+                <div class="quiz-area" id="dailyQuizCard" style="animation:none;position:relative;overflow:hidden">
+                    ${dailyState.currentIndex > 0 ? '<span class="swipe-hint right">←</span>' : ''}
+                    ${dailyState.currentIndex < 9 ? '<span class="swipe-hint left">→</span>' : ''}
+                    <div class="quiz-header">
+                        <h2>📅 每日一练</h2>
+                        <span class="quiz-meta">第 ${dailyState.currentIndex + 1} / 10 题</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="fill" style="width:${((dailyState.currentIndex + 1) / 10) * 100}%"></div>
+                    </div>
+                    <div class="question" style="margin-top:20px">${q.q}</div>
+                    <ul class="options">${q.o.map((opt, i) => {
+                        let cls = '';
+                        if(answered){
+                            if(i === q.a) cls = 'correct';
+                            else if(i === dailyState.answers[dailyState.currentIndex]) cls = 'wrong';
+                        }
+                        return `<li class="${cls}" onclick="${answered ? '' : 'selectDailyAnswer(' + i + ')'}">${String.fromCharCode(65 + i)}. ${opt}</li>`;
+                    }).join('')}</ul>
+                    ${answered ? `
+                        <div class="result ${isCorrect ? 'pass' : 'fail'}">
+                            <div style="font-size:1.1rem;font-weight:600;margin-bottom:8px">${isCorrect ? '✅ 回答正确！' : '❌ 回答错误'}</div>
+                        </div>
+                        ${!isCorrect && q.r ? `
+                            <div class="explanation-panel" id="dailyExplanationPanel">
+                                <div class="explanation-panel-header" onclick="toggleDailyExplanation()">
+                                    <span>💡 查看解析</span>
+                                    <span class="arrow">▼</span>
+                                </div>
+                                <div class="explanation-panel-content">
+                                    ${q.r}
+                                </div>
+                            </div>
+                        ` : ''}
+                    ` : ''}
+                    <div class="actions">
+                        ${dailyState.currentIndex > 0 ? '<button class="btn-warning" onclick="prevDailyQuestion()">← 上一题</button>' : ''}
+                        ${answered ? (dailyState.currentIndex < 9 ? '<button class="btn-primary" onclick="nextDailyQuestion()">下一题 →</button>' : '<button class="btn-success" onclick="finishDailyPractice()">🏁 完成练习</button>') : ''}
+                    </div>
+                    <div class="swipe-indicator">
+                        <span>← 上一题</span>
+                        <span>下一题 →</span>
+                    </div>
+                </div>
+            `;
+
+            setupSwipeHandlers('dailyQuizCard', dailyState.currentIndex > 0, dailyState.currentIndex < 9, 'daily');
+        }
+
+        function toggleDailyExplanation(){
+            const panel = document.getElementById('dailyExplanationPanel');
+            if(panel){
+                panel.classList.toggle('collapsed');
+            }
+        }
+
+        // 选择每日一练答案
+        function selectDailyAnswer(idx){
+            const q = dailyState.questions[dailyState.currentIndex];
+            const correct = idx === q.a;
+            dailyState.answers[dailyState.currentIndex] = idx;
+
+            if(correct){
+                showToast('✨ 回答正确！', 'success');
+                // 播放TIBO精灵庆祝动画
+                showTiboCelebration();
+            } else {
+                showToast('❌ 回答错误', 'error');
+            }
+
+            renderDailyQuestion();
+        }
+
+        // 下一题
+        function nextDailyQuestion(){
+            dailyState.currentIndex++;
+            renderDailyQuestion();
+        }
+
+        // 上一题
+        function prevDailyQuestion(){
+            dailyState.currentIndex--;
+            renderDailyQuestion();
+        }
+
+        // 完成每日一练
+        function finishDailyPractice(){
+            const endTime = Date.now();
+            const timeSpent = Math.round((endTime - dailyState.startTime) / 1000); // 秒
+
+            // 计算得分
+            let correctCount = 0;
+            dailyState.questions.forEach((q, i) => {
+                if(dailyState.answers[i] === q.a){
+                    correctCount++;
+                }
+            });
+
+            const score = correctCount * 10; // 每题10分
+
+            // 更新打卡记录
+            const today = getTodayDate();
+            const yesterday = getYesterdayDate();
+
+            if(state.daily.lastDate === yesterday || state.daily.lastDate === ''){
+                // 连续打卡
+                state.daily.streak++;
+            } else if(state.daily.lastDate !== today){
+                // 断签后重新开始
+                state.daily.streak = 1;
+            }
+
+            state.daily.lastDate = today;
+            if(!state.daily.completedDates.includes(today)){
+                state.daily.completedDates.push(today);
+            }
+
+            // 保存今日数据
+            localStorage.setItem(`tibo_daily_${today}`, JSON.stringify({
+                score,
+                time: timeSpent,
+                correctCount,
+                answers: dailyState.answers
+            }));
+
+            saveState();
+            updateStats();
+
+            // 显示结果
+            showDailyResult(score, timeSpent, correctCount, false);
+        }
+
+        // 显示每日一练结果
+        function showDailyResult(score, time, correctCount, isAlreadyCompleted){
+            const area = document.getElementById('quizArea');
+            const minutes = Math.floor(time / 60);
+            const seconds = time % 60;
+            const timeStr = minutes > 0 ? `${minutes}分${seconds}秒` : `${seconds}秒`;
+
+            const isGood = correctCount >= 8;
+
+            area.innerHTML = `
+                <div class="daily-result-card">
+                    <h2 style="color:var(--primary-dark);margin-bottom:20px">${isAlreadyCompleted ? '✅ 今日已完成' : '🎉 练习完成！'}</h2>
+                    <div class="score-display">${score}分</div>
+                    <div class="time-display">用时：${timeStr} | 正确：${correctCount}/10</div>
+                    <div class="result-message ${isGood ? 'success' : 'fail'}">
+                        ${isGood ? '🌟 太棒了！继续保持！' : '💪 加油！明天继续努力！'}
+                        <div style="margin-top:8px;font-size:.85rem">已连续打卡 ${state.daily.streak} 天 🔥</div>
+                    </div>
+                    <div class="actions" style="margin-top:24px">
+                        <button class="btn-primary" onclick="renderQuiz()">返回练习</button>
+                        <button class="btn-warning" onclick="showDailyPractice()">查看详情</button>
+                    </div>
+                </div>
+            `;
         }
 
         init();
