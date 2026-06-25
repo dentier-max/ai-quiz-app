@@ -345,14 +345,18 @@ body { padding-bottom: 80px; }
 .option-btn:nth-child(4) { animation-delay: 0.2s; }
 .option-btn:hover:not(.disabled) {
   border-color: var(--primary); background: var(--primary-bg);
+  transform: scale(1.02) translateY(-2px);
+  box-shadow: 0 8px 20px rgba(126,200,201,.25);
 }
 .option-btn.correct {
   border-color: var(--correct); background: rgba(126,200,201,0.1);
   animation: bounceIn 0.5s ease;
+  transform: scale(1.02);
 }
 .option-btn.wrong {
   border-color: var(--wrong); background: rgba(232,180,184,0.1);
   animation: shake 0.5s ease;
+  transform: scale(1.02);
 }
 .option-btn.disabled { pointer-events: none; opacity: 0.7; }
 .option-btn.disabled.correct { opacity: 1; }
@@ -423,6 +427,68 @@ body { padding-bottom: 80px; }
   text-align: center; padding: 8px;
   font-size: 12px; color: var(--text-secondary);
   animation: fadeIn 1s ease 1s both;
+}
+
+/* Swipe Animation */
+.swipe-transition {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+}
+.swipe-left {
+  transform: translateX(-20px); opacity: 0.8;
+}
+.swipe-right {
+  transform: translateX(20px); opacity: 0.8;
+}
+
+/* Daily Practice */
+.daily-card {
+  background: linear-gradient(135deg, #4CAF50, #81C784);
+  padding: 32px; border-radius: var(--radius);
+  box-shadow: 0 8px 30px rgba(76,175,80,0.3);
+  color: #fff; text-align: center;
+  margin-bottom: 16px; animation: slideUpIn 0.6s ease-out;
+}
+.daily-card h2 { font-size: 1.5rem; margin-bottom: 12px; }
+.daily-streak-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.2); padding: 8px 16px;
+  border-radius: 12px; font-size: 0.9rem; margin-bottom: 16px;
+  backdrop-filter: blur(8px);
+}
+.daily-start-btn {
+  background: #fff; color: var(--primary-dark);
+  border: none; padding: 14px 32px; border-radius: 14px;
+  cursor: pointer; font-size: 1rem; font-weight: 600;
+  transition: all 0.2s; margin-top: 12px;
+}
+.daily-start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255,255,255,0.3);
+}
+.daily-result-card {
+  background: var(--card-bg); padding: 28px; border-radius: var(--radius);
+  box-shadow: var(--shadow); text-align: center;
+  margin-bottom: 16px; border: 1px solid var(--border);
+  animation: slideUpIn 0.6s ease-out;
+}
+.daily-score {
+  font-size: 3rem; font-weight: 700; color: var(--primary);
+  margin-bottom: 12px;
+}
+.daily-time {
+  color: var(--text-secondary); font-size: 1rem; margin-bottom: 20px;
+}
+.daily-message {
+  padding: 16px; border-radius: 12px; margin-top: 16px;
+  font-size: 0.95rem;
+}
+.daily-message.success {
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  color: var(--primary-dark);
+}
+.daily-message.fail {
+  background: linear-gradient(135deg, #ffebee, #ffcdd2);
+  color: var(--danger);
 }
 
 /* ===== Bottom Nav ===== */
@@ -938,6 +1004,11 @@ body { padding-bottom: 80px; }
   <div class="swipe-hint">&#8592; 左右滑动切换题目 &#8594;</div>
 </div>
 
+<!-- Daily Practice Page -->
+<div class="page" id="page-daily">
+  <div id="daily-content"></div>
+</div>
+
 <!-- Question List Page -->
 <div class="page" id="page-list">
   <input type="text" class="search-box" id="search-box" placeholder="搜索题目..." oninput="filterQuestionList()">
@@ -987,6 +1058,9 @@ body { padding-bottom: 80px; }
 <div class="bottom-nav">
   <button class="nav-item active" onclick="switchPage('quiz')" data-page="quiz">
     <span class="nav-icon">&#128221;</span><span>刷刷刷</span>
+  </button>
+  <button class="nav-item" onclick="switchPage('daily')" data-page="daily">
+    <span class="nav-icon">&#128198;</span><span>每日练</span>
   </button>
   <button class="nav-item" onclick="switchPage('list')" data-page="list">
     <span class="nav-icon">&#128214;</span><span>题海</span>
@@ -1352,7 +1426,12 @@ let state = {
   stats: {},          // { subjectId: { correct:0, total:0, history:[] } }
   subjects: [],
   theme: 'light',
-  currentPage: 'quiz'
+  currentPage: 'quiz',
+  daily: {            // 每日一练数据
+    streak: 0,        // 连续打卡天数
+    lastDate: '',     // 最后打卡日期
+    completedDates: [] // 已完成日期列表
+  }
 };
 
 // ============================================================
@@ -1571,12 +1650,13 @@ function loadState() {
     const saved = localStorage.getItem('tibo_state');
     if (saved) {
       const s = JSON.parse(saved);
-      // Merge saved state
       state.currentSubject = s.currentSubject || 'final';
       state.currentIndex = s.currentIndex || 0;
       state.theme = s.theme || 'light';
       state.subjects = s.subjects || [];
-      // Restore Sets from arrays
+      state.daily = s.daily || { streak: 0, lastDate: '', completedDates: [] };
+      // 更新连续打卡天数
+      updateDailyStreak();
       state.answered = {};
       state.favorites = {};
       if (s.answered) {
@@ -1598,6 +1678,7 @@ function saveState() {
       currentIndex: state.currentIndex,
       theme: state.theme,
       subjects: state.subjects,
+      daily: state.daily,
       answered: {},
       favorites: {},
       wrongBook: state.wrongBook,
@@ -1762,6 +1843,55 @@ function removeSubject(id) {
 }
 
 // ============================================================
+// Daily Practice Functions
+// ============================================================
+function getTodayDate() {
+  const now = new Date();
+  return `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
+}
+
+function getYesterdayDate() {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  return `${yesterday.getFullYear()}-${yesterday.getMonth()+1}-${yesterday.getDate()}`;
+}
+
+function updateDailyStreak() {
+  const today = getTodayDate();
+  const yesterday = getYesterdayDate();
+
+  if (state.daily.lastDate === today) {
+    // 今天已打卡
+  } else if (state.daily.lastDate === yesterday) {
+    // 昨天打卡了，保持当前连续天数
+  } else if (state.daily.lastDate !== today && state.daily.lastDate !== yesterday) {
+    // 断签了，重置连续天数
+    state.daily.streak = 0;
+  }
+}
+
+function hashCode(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return Math.abs(hash);
+}
+
+function seededShuffle(array, seed) {
+  const result = array.slice();
+  let m = result.length;
+  while (m) {
+    seed = (seed * 16807) % 2147483647;
+    const i = seed % m--;
+    [result[m], result[i]] = [result[i], result[m]];
+  }
+  return result;
+}
+
+// ============================================================
 // Get questions for current subject
 // ============================================================
 function getCurrentQuestions() {
@@ -1916,6 +2046,247 @@ function goToQuestion(index) {
 }
 
 // ============================================================
+// Daily Practice Main Functions
+// ============================================================
+let dailyState = {
+  questions: [],
+  currentIndex: 0,
+  answers: {},
+  startTime: null,
+  isCompleted: false
+};
+
+function getDailyQuestions() {
+  const today = getTodayDate();
+  const seed = hashCode(today);
+  const shuffled = seededShuffle(defaultQuestions, seed);
+  return shuffled.slice(0, 10);
+}
+
+function showDailyPractice() {
+  const container = document.getElementById('daily-content');
+  const today = getTodayDate();
+  const alreadyCompleted = state.daily.completedDates.includes(today);
+
+  if (alreadyCompleted) {
+    const dailyData = JSON.parse(localStorage.getItem(`tibo_daily_${today}`) || '{}');
+    if (dailyData.score !== undefined) {
+      renderDailyResult(dailyData.score, dailyData.time, dailyData.correctCount, true);
+    } else {
+      container.innerHTML = `
+        <div class="daily-card">
+          <h2>&#128198; 每日一练</h2>
+          <div class="daily-streak-badge">
+            <span>&#128293;</span>
+            <span>已连续打卡 ${state.daily.streak} 天</span>
+          </div>
+          <p style="margin-top:16px">&#9989; 今天已完成每日一练！</p>
+          <p style="margin-top:8px;font-size:0.9rem;opacity:0.9">明天再来挑战新的题目吧</p>
+          <button class="daily-start-btn" onclick="switchPage('quiz')">返回练习</button>
+        </div>
+      `;
+    }
+  } else {
+    container.innerHTML = `
+      <div class="daily-card">
+        <h2>&#128198; 每日一练</h2>
+        <div class="daily-streak-badge">
+          <span>&#128293;</span>
+          <span>已连续打卡 ${state.daily.streak} 天</span>
+        </div>
+        <p style="margin-top:12px">每天随机抽取10道题，坚持打卡提升学习效果</p>
+        <button class="daily-start-btn" onclick="startDailyPractice()">开始今日练习</button>
+      </div>
+    `;
+  }
+}
+
+function startDailyPractice() {
+  dailyState.questions = getDailyQuestions();
+  dailyState.currentIndex = 0;
+  dailyState.answers = {};
+  dailyState.startTime = Date.now();
+  dailyState.isCompleted = false;
+  renderDailyQuestion();
+}
+
+function renderDailyQuestion() {
+  const container = document.getElementById('daily-content');
+  const questions = dailyState.questions;
+  const q = questions[dailyState.currentIndex];
+  const isAnswered = dailyState.answers[dailyState.currentIndex] !== undefined;
+  const isCorrect = isAnswered && dailyState.answers[dailyState.currentIndex] === q.a;
+
+  container.innerHTML = `
+    <div class="question-card" id="daily-question-card">
+      <div class="question-number">每日一练 · 第 ${dailyState.currentIndex + 1} / 10 题</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options-list" id="daily-options-list"></div>
+      <div class="explanation" id="daily-explanation">
+        <div class="explanation-title">解析</div>
+        <div class="explanation-text" id="daily-explanation-text"></div>
+      </div>
+    </div>
+    <div class="action-row">
+      ${dailyState.currentIndex > 0 ? '<button class="action-btn secondary" onclick="dailyPrev()">← 上一题</button>' : ''}
+      ${isAnswered ? (dailyState.currentIndex < 9 ? '<button class="action-btn primary" onclick="dailyNext()">下一题 &#10145;&#65039;</button>' : '<button class="action-btn primary" onclick="finishDailyPractice()">&#127941; 完成练习</button>') : ''}
+    </div>
+    <div class="swipe-hint">&#8592; 左右滑动切换题目 &#8594;</div>
+  `;
+
+  const labels = ['A', 'B', 'C', 'D'];
+  const optList = document.getElementById('daily-options-list');
+  q.o.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    if (isAnswered) {
+      btn.classList.add('disabled');
+      if (i === q.a) btn.classList.add('correct');
+      if (i === dailyState.answers[dailyState.currentIndex] && !isCorrect) btn.classList.add('wrong');
+    }
+    btn.innerHTML = `<span class="option-label">${labels[i]}</span><span class="option-text">${opt}</span>`;
+    btn.onclick = () => dailySelectOption(i);
+    optList.appendChild(btn);
+  });
+
+  const expEl = document.getElementById('daily-explanation');
+  const expText = document.getElementById('daily-explanation-text');
+  if (isAnswered && q.r) {
+    expText.textContent = q.r;
+    expEl.classList.add('show');
+  } else {
+    expEl.classList.remove('show');
+  }
+
+  initDailySwipe();
+}
+
+function initDailySwipe() {
+  let startX = 0, startY = 0, isDragging = false;
+  const card = document.getElementById('daily-question-card');
+  if (!card) return;
+
+  function showSwipeAnim(direction) {
+    card.classList.add('swipe-transition');
+    card.classList.add(direction === 'left' ? 'swipe-left' : 'swipe-right');
+    setTimeout(() => {
+      card.classList.remove('swipe-transition');
+      card.classList.remove('swipe-left');
+      card.classList.remove('swipe-right');
+    }, 300);
+  }
+
+  card.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isDragging = true;
+  }, { passive: true });
+
+  card.addEventListener('touchend', e => {
+    if (!isDragging) return;
+    const endX = e.changedTouches[0].clientX;
+    const diffX = endX - startX;
+    if (Math.abs(diffX) > 60) {
+      if (diffX < 0 && dailyState.currentIndex < 9) {
+        const isAnswered = dailyState.answers[dailyState.currentIndex] !== undefined;
+        if (isAnswered) {
+          showSwipeAnim('left');
+          setTimeout(() => dailyNext(), 150);
+        }
+      } else if (diffX > 0 && dailyState.currentIndex > 0) {
+        showSwipeAnim('right');
+        setTimeout(() => dailyPrev(), 150);
+      }
+    }
+    isDragging = false;
+  }, { passive: true });
+}
+
+function dailySelectOption(index) {
+  const q = dailyState.questions[dailyState.currentIndex];
+  const isCorrect = index === q.a;
+  dailyState.answers[dailyState.currentIndex] = index;
+
+  if (isCorrect) {
+    triggerConfetti();
+    triggerHaptic('correct');
+    tiboHappy();
+  } else {
+    triggerHaptic('wrong');
+    tiboCheer();
+  }
+
+  renderDailyQuestion();
+}
+
+function dailyNext() {
+  dailyState.currentIndex++;
+  renderDailyQuestion();
+}
+
+function dailyPrev() {
+  dailyState.currentIndex--;
+  renderDailyQuestion();
+}
+
+function finishDailyPractice() {
+  const endTime = Date.now();
+  const timeSpent = Math.round((endTime - dailyState.startTime) / 1000);
+
+  let correctCount = 0;
+  dailyState.questions.forEach((q, i) => {
+    if (dailyState.answers[i] === q.a) correctCount++;
+  });
+
+  const score = correctCount * 10;
+
+  const today = getTodayDate();
+  const yesterday = getYesterdayDate();
+
+  if (state.daily.lastDate === yesterday || state.daily.lastDate === '') {
+    state.daily.streak++;
+  } else if (state.daily.lastDate !== today) {
+    state.daily.streak = 1;
+  }
+
+  state.daily.lastDate = today;
+  if (!state.daily.completedDates.includes(today)) {
+    state.daily.completedDates.push(today);
+  }
+
+  localStorage.setItem(`tibo_daily_${today}`, JSON.stringify({
+    score, time: timeSpent, correctCount, answers: dailyState.answers
+  }));
+
+  saveState();
+  renderDailyResult(score, timeSpent, correctCount, false);
+}
+
+function renderDailyResult(score, time, correctCount, isAlreadyCompleted) {
+  const container = document.getElementById('daily-content');
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  const timeStr = minutes > 0 ? `${minutes}分${seconds}秒` : `${seconds}秒`;
+  const isGood = correctCount >= 8;
+
+  container.innerHTML = `
+    <div class="daily-result-card">
+      <h2 style="color:var(--primary-dark);margin-bottom:20px">${isAlreadyCompleted ? '&#9989; 今日已完成' : '&#127881; 练习完成！'}</h2>
+      <div class="daily-score">${score}分</div>
+      <div class="daily-time">用时：${timeStr} | 正确：${correctCount}/10</div>
+      <div class="daily-message ${isGood ? 'success' : 'fail'}">
+        ${isGood ? '&#127775; 太棒了！继续保持！' : '&#128170; 加油！明天继续努力！'}
+        <div style="margin-top:8px;font-size:0.85rem">已连续打卡 ${state.daily.streak} 天 &#128293;</div>
+      </div>
+      <div class="action-row" style="margin-top:24px">
+        <button class="action-btn secondary" onclick="switchPage('quiz')">返回练习</button>
+        <button class="action-btn primary" onclick="showDailyPractice()">查看详情</button>
+      </div>
+    </div>
+  `;
+}
+
+// ============================================================
 // Progress
 // ============================================================
 function updateProgress() {
@@ -1957,6 +2328,7 @@ function switchPage(page) {
   if (page === 'wrong') renderWrongBook();
   if (page === 'fav') renderFavorites();
   if (page === 'stats') renderStats();
+  if (page === 'daily') showDailyPractice();
 }
 
 // ============================================================
@@ -2201,11 +2573,23 @@ function triggerHaptic(type) {
 function initSwipeGesture() {
   let startX = 0, startY = 0, isDragging = false;
   const card = document.getElementById('question-card');
+
+  function showSwipeAnimation(direction) {
+    card.classList.add('swipe-transition');
+    card.classList.add(direction === 'left' ? 'swipe-left' : 'swipe-right');
+    setTimeout(() => {
+      card.classList.remove('swipe-transition');
+      card.classList.remove('swipe-left');
+      card.classList.remove('swipe-right');
+    }, 300);
+  }
+
   card.addEventListener('touchstart', e => {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
     isDragging = true;
   }, { passive: true });
+
   card.addEventListener('touchend', e => {
     if (!isDragging) return;
     const endX = e.changedTouches[0].clientX;
@@ -2213,22 +2597,33 @@ function initSwipeGesture() {
     const diffX = endX - startX;
     const diffY = endY - startY;
     if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
-      if (diffX < 0) nextQuestion();
-      else prevQuestion();
+      if (diffX < 0) {
+        showSwipeAnimation('left');
+        setTimeout(() => nextQuestion(), 150);
+      } else {
+        showSwipeAnimation('right');
+        setTimeout(() => prevQuestion(), 150);
+      }
     }
     isDragging = false;
   }, { passive: true });
-  // Mouse swipe for desktop
+
   card.addEventListener('mousedown', e => {
     startX = e.clientX; startY = e.clientY; isDragging = true;
   });
+
   card.addEventListener('mouseup', e => {
     if (!isDragging) return;
     const diffX = e.clientX - startX;
     const diffY = e.clientY - startY;
     if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
-      if (diffX < 0) nextQuestion();
-      else prevQuestion();
+      if (diffX < 0) {
+        showSwipeAnimation('left');
+        setTimeout(() => nextQuestion(), 150);
+      } else {
+        showSwipeAnimation('right');
+        setTimeout(() => prevQuestion(), 150);
+      }
     }
     isDragging = false;
   });
