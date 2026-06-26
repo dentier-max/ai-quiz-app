@@ -111,69 +111,6 @@ body { padding-bottom: 80px; }
   to { opacity:1; transform: translateY(0); }
 }
 
-/* ===== Header Center Style ===== */
-.header-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-}
-.header-center .header-title {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--primary-dark);
-}
-.header-center .title-main {
-  font-family: 'KaiTi','STKaiti','楷体','SimKaiti',serif;
-  font-size: 1.4rem;
-  letter-spacing: 2px;
-}
-.header-center .title-sep {
-  color: var(--primary);
-  font-weight: 400;
-}
-.header-center .title-tibo-bubble {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-  color: white;
-  font-size: 0.85rem;
-  font-weight: 700;
-  box-shadow: 0 2px 8px rgba(126,200,201,0.4);
-  border: 2px solid rgba(255,255,255,0.6);
-}
-
-/* ===== Language Switch Button ===== */
-.lang-switch-btn {
-  position: fixed;
-  top: 16px;
-  right: 80px;
-  z-index: 1000;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-  color: white;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(126,200,201,0.3);
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.lang-switch-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(126,200,201,0.4);
-}
-
 /* ===== Animations ===== */
 @keyframes slideUpIn {
   from { opacity:0; transform: translateY(40px); }
@@ -700,239 +637,6 @@ body { padding-bottom: 80px; }
 }
 .import-area:hover { border-color: var(--primary); background: var(--primary-bg); }
 .import-text { font-size: 14px; color: var(--text-secondary); }
-
-/* ===== Daily Practice Page ===== */
-.daily-header {
-  text-align: center;
-  padding: 20px 0 16px;
-  animation: fadeInUp 0.5s ease;
-}
-.daily-header h2 {
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--primary-dark);
-  margin-bottom: 4px;
-}
-.daily-header p {
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-.daily-streak-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin: 12px 0 20px;
-  padding: 14px 20px;
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  animation: slideUpIn 0.4s ease 0.1s both;
-}
-.streak-number {
-  font-size: 32px;
-  font-weight: 800;
-  color: var(--primary);
-}
-.streak-label {
-  font-size: 14px;
-  color: var(--text-secondary);
-}
-.streak-fire {
-  font-size: 28px;
-}
-.daily-calendar {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  margin: 16px 0;
-  animation: slideUpIn 0.4s ease 0.2s both;
-}
-.cal-day {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 600;
-  background: var(--card-bg);
-  border: 2px solid var(--border);
-  color: var(--text-secondary);
-  transition: all 0.3s;
-}
-.cal-day.done {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: #fff;
-}
-.cal-day.today {
-  border-color: var(--primary-dark);
-  box-shadow: 0 0 0 3px rgba(126,200,201,0.3);
-}
-.cal-day .cal-weekday {
-  font-size: 9px;
-  opacity: 0.7;
-}
-.daily-start-btn {
-  display: block;
-  width: 80%;
-  max-width: 300px;
-  margin: 20px auto;
-  padding: 16px;
-  border-radius: 16px;
-  border: none;
-  background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--primary-light));
-  color: #fff;
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 4px 20px rgba(126,200,201,0.4);
-  transition: all 0.3s;
-  animation: bounceIn 0.6s ease 0.3s both;
-}
-.daily-start-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(126,200,201,0.5);
-}
-.daily-start-btn:active {
-  transform: scale(0.97);
-}
-.daily-start-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-.daily-result {
-  text-align: center;
-  padding: 24px 20px;
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  margin: 16px 0;
-  animation: scaleIn 0.5s ease;
-}
-.daily-result h3 {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--primary-dark);
-  margin-bottom: 16px;
-}
-.daily-score {
-  font-size: 48px;
-  font-weight: 900;
-  color: var(--primary);
-  line-height: 1;
-  margin-bottom: 8px;
-}
-.daily-stats-row {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  margin: 16px 0;
-}
-.daily-stat-item {
-  text-align: center;
-}
-.daily-stat-value {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--primary);
-}
-.daily-stat-label {
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-.daily-tibo-msg {
-  margin-top: 16px;
-  padding: 12px 16px;
-  background: var(--primary-bg);
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--primary-dark);
-  border-left: 4px solid var(--primary);
-  animation: bounceIn 0.6s ease 0.3s both;
-}
-
-/* ===== Option Hover Enhancement ===== */
-.option-btn:hover:not(.disabled) {
-  transform: scale(1.02);
-  box-shadow: 0 4px 16px rgba(126,200,201,0.3);
-}
-
-/* ===== View Explanation Button ===== */
-.view-explain-btn {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 8px 16px;
-  border-radius: 10px;
-  border: 1px solid var(--primary);
-  background: var(--primary-bg);
-  color: var(--primary-dark);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  animation: fadeIn 0.4s ease 0.2s both;
-}
-.view-explain-btn:hover {
-  background: var(--primary);
-  color: #fff;
-}
-
-/* ===== TIBO Celebration Animation ===== */
-@keyframes tiboCelebrate {
-  0% { transform: translateY(0) scale(1); }
-  20% { transform: translateY(-20px) scale(1.1); }
-  40% { transform: translateY(-10px) scale(1.05); }
-  60% { transform: translateY(-25px) scale(1.15); }
-  80% { transform: translateY(-5px) scale(1.02); }
-  100% { transform: translateY(0) scale(1); }
-}
-.tibo-celebrate .tibo-img {
-  animation: tiboCelebrate 1s ease !important;
-}
-
-/* ===== Star Particles for TIBO ===== */
-@keyframes starBurst {
-  0% { transform: translate(0, 0) scale(1); opacity: 1; }
-  100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
-}
-.star-particle {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: var(--primary);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: starBurst 0.8s ease forwards;
-}
-
-/* ===== Swipe Page Transition ===== */
-@keyframes swipeLeftOut {
-  from { transform: translateX(0); opacity: 1; }
-  to { transform: translateX(-100%); opacity: 0; }
-}
-@keyframes swipeLeftIn {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-@keyframes swipeRightOut {
-  from { transform: translateX(0); opacity: 1; }
-  to { transform: translateX(100%); opacity: 0; }
-}
-@keyframes swipeRightIn {
-  from { transform: translateX(-100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-.question-card.swipe-left-out { animation: swipeLeftOut 0.3s ease forwards; }
-.question-card.swipe-left-in { animation: swipeLeftIn 0.3s ease forwards; }
-.question-card.swipe-right-out { animation: swipeRightOut 0.3s ease forwards; }
-.question-card.swipe-right-in { animation: swipeRightIn 0.3s ease forwards; }
-
 </style>
 </head>
 <body>
@@ -963,14 +667,10 @@ body { padding-bottom: 80px; }
 
 <!-- Header -->
 <div class="header">
-  <div class="header-center">
-    <span class="header-title">
-      <span class="title-main" style="font-family:'KaiTi','STKaiti','楷体',serif">题宝</span>
-      <span class="title-sep">~</span>
-      <span class="title-tibo-bubble">TiBo</span>
-    </span>
+  <div class="header-left">
+    <img class="header-logo" src="tibo-mascot.png" onerror="this.style.display='none'" alt="TiBo">
+    <span class="header-title">题宝~TiBo</span>
   </div>
-  <button class="lang-switch-btn" id="lang-switch-btn" onclick="toggleLanguage()" title="切换语言">中</button>
   <div class="header-right">
     <button class="header-btn" onclick="toggleTheme()" title="切换主题" id="theme-btn">&#9728;&#65039;</button>
     <button class="header-btn" onclick="showSubjectModal()" title="科目管理">&#9881;&#65039;</button>
@@ -1034,26 +734,6 @@ body { padding-bottom: 80px; }
   </div>
 </div>
 
-
-<!-- Daily Practice Page -->
-<div class="page" id="page-daily">
-  <div class="daily-header">
-    <h2>每日一练</h2>
-    <p>每天10道题，坚持刷题成为学霸！</p>
-  </div>
-  <div class="daily-streak-bar">
-    <span class="streak-fire">🔥</span>
-    <div>
-      <div class="streak-number" id="daily-streak-num">0</div>
-      <div class="streak-label">连续打卡天数</div>
-    </div>
-  </div>
-  <div class="daily-calendar" id="daily-calendar"></div>
-  <div id="daily-content">
-    <button class="daily-start-btn" id="daily-start-btn" onclick="startDailyPractice()">开始今日练习</button>
-  </div>
-</div>
-
 <!-- Bottom Navigation -->
 <div class="bottom-nav">
   <button class="nav-item active" onclick="switchPage('quiz')" data-page="quiz">
@@ -1073,9 +753,6 @@ body { padding-bottom: 80px; }
   </button>
   <button class="nav-item" onclick="switchPage('stats')" data-page="stats">
     <span class="nav-icon">&#128200;</span><span>战绩</span>
-  </button>
-  <button class="nav-item" onclick="switchPage('daily')" data-page="daily">
-    <span class="nav-icon">🔥</span><span>每日练</span>
   </button>
 </div>
 
@@ -1714,10 +1391,6 @@ function switchSubject(id) {
   updateProgress();
 }
 
-
-
-
-
 function showSubjectModal() {
   const modal = document.getElementById('subject-modal');
   const list = document.getElementById('subject-list');
@@ -1889,6 +1562,59 @@ function updateFavButton(isFav) {
 // ============================================================
 // Select Option
 // ============================================================
+function selectOption(index) {
+  const questions = getCurrentQuestions();
+  const q = questions[state.currentIndex];
+  const subId = state.currentSubject;
+
+  if (state.answered[subId]?.has(state.currentIndex)) return;
+
+  // Init sets
+  if (!state.answered[subId]) state.answered[subId] = new Set();
+  if (!state.stats[subId]) state.stats[subId] = { correct:0, total:0, history:[] };
+
+  state.answered[subId].add(state.currentIndex);
+  state.stats[subId].total++;
+
+  const isCorrect = index === q.a;
+  if (isCorrect) {
+    state.stats[subId].correct++;
+    triggerConfetti();
+    triggerHaptic('correct');
+    tiboHappy();
+  } else {
+    state.stats[subId].wrong = (state.stats[subId].wrong || 0) + 1;
+    // Add to wrong book
+    if (!state.wrongBook[subId]) state.wrongBook[subId] = [];
+    if (!state.wrongBook[subId].includes(state.currentIndex)) {
+      state.wrongBook[subId].push(state.currentIndex);
+    }
+    triggerHaptic('wrong');
+    tiboCheer();
+  }
+
+  // Update history
+  state.stats[subId].history.push(isCorrect ? 1 : 0);
+  if (state.stats[subId].history.length > 100) state.stats[subId].history.shift();
+
+  saveState();
+
+  // Update UI
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach((btn, i) => {
+    btn.classList.add('disabled');
+    if (i === q.a) btn.classList.add('correct');
+    if (i === index && !isCorrect) btn.classList.add('wrong');
+  });
+
+  // Show explanation
+  if (q.r) {
+    document.getElementById('explanation-text').textContent = q.r;
+    document.getElementById('explanation').classList.add('show');
+  }
+
+  updateProgress();
+}
 
 // ============================================================
 // Navigation
@@ -1920,7 +1646,7 @@ function goToQuestion(index) {
 // ============================================================
 // Daily Practice Main Functions
 // ============================================================
-var dailyState = {
+let dailyState = {
   questions: [],
   currentIndex: 0,
   answers: {},
@@ -2359,42 +2085,6 @@ function renderStats() {
 // ============================================================
 // Theme
 // ============================================================
-// ============================================================
-// Language Switch
-// ============================================================
-let currentLang = localStorage.getItem('tibo_lang') || 'zh';
-const i18n = {
-  zh: { title: '题宝', subtitle: '智能刷题助手', tabs: ['刷刷刷','题海','查漏','宝藏','战绩','每日练'], next: '下一题', prev: '上一题', collect: '收藏', uncollect: '已收藏', search: '搜索题目...', dailyTitle: '每日一练', dailyDesc: '每天随机抽取10道题，坚持打卡提升学习效果', dailyStart: '开始今日练习', dailyDone: '今天已完成每日一练！', dailyComeBack: '明天再来挑战新的题目吧', resultTitle: '练习完成！', resultDone: '今日已完成', correct: '正确', time: '用时', streak: '已连续打卡', days: '天', back: '返回练习', detail: '查看详情', goodJob: '太棒了！继续保持！', keepUp: '加油！明天继续努力！', explanation: '解析', viewExp: '查看解析', clearWrong: '清空错题本', noWrong: '暂无错题，继续保持！', noFav: '暂无收藏题目', statsTitle: '学习统计', totalDone: '总答题数', correctRate: '正确率', wrongCount: '错题数', favCount: '收藏数', todayDone: '今日答题', streakDays: '连续打卡', settings: '设置', about: '关于题宝', version: '版本', builtWith: '构建于 2025', importQ: '导入题库', exportQ: '导出数据', reset: '重置所有数据', resetConfirm: '确定要重置所有数据吗？此操作不可撤销！', theme: '主题', light: '浅色', dark: '深色', auto: '自动', swipeHint: '← 左右滑动切换题目 →' },
-  en: { title: 'TiBo', subtitle: 'Smart Quiz Helper', tabs: ['Quiz','Bank','Review','Fav','Stats','Daily'], next: 'Next', prev: 'Prev', collect: 'Save', uncollect: 'Saved', search: 'Search questions...', dailyTitle: 'Daily Practice', dailyDesc: '10 random questions daily. Keep practicing!', dailyStart: 'Start Today', dailyDone: "You've completed today's practice!", dailyComeBack: 'Come back tomorrow for more!', resultTitle: 'Practice Complete!', resultDone: 'Completed Today', correct: 'Correct', time: 'Time', streak: 'Streak', days: 'days', back: 'Back to Quiz', detail: 'Details', goodJob: 'Great job! Keep it up!', keepUp: "Keep going! You'll do better tomorrow!", explanation: 'Explanation', viewExp: 'View Explanation', clearWrong: 'Clear Wrong Book', noWrong: 'No wrong answers yet, keep it up!', noFav: 'No saved questions yet', statsTitle: 'Statistics', totalDone: 'Total Answered', correctRate: 'Accuracy', wrongCount: 'Wrong', favCount: 'Saved', todayDone: 'Today', streakDays: 'Streak', settings: 'Settings', about: 'About TiBo', version: 'Version', builtWith: 'Built in 2025', importQ: 'Import Questions', exportQ: 'Export Data', reset: 'Reset All Data', resetConfirm: 'Are you sure? This cannot be undone!', theme: 'Theme', light: 'Light', dark: 'Dark', auto: 'Auto', swipeHint: '← Swipe to switch →' }
-};
-
-function toggleLanguage() {
-  currentLang = currentLang === 'zh' ? 'en' : 'zh';
-  localStorage.setItem('tibo_lang', currentLang);
-  applyLanguage();
-  const btn = document.getElementById('lang-switch-btn');
-  if (btn) btn.textContent = currentLang === 'zh' ? '中' : 'En';
-}
-
-function applyLanguage() {
-  const t = i18n[currentLang];
-  if (!t) return;
-  const titleMain = document.querySelector('.title-main');
-  if (titleMain) titleMain.textContent = t.title;
-  document.title = `${t.title}~TiBo - ${t.subtitle}`;
-  const tabLabels = document.querySelectorAll('.nav-label');
-  tabLabels.forEach((label, i) => { if (t.tabs[i]) label.textContent = t.tabs[i]; });
-  const searchInput = document.getElementById('search-input');
-  if (searchInput) searchInput.placeholder = t.search;
-  const swipeHint = document.querySelector('.swipe-hint');
-  if (swipeHint) swipeHint.textContent = t.swipeHint;
-}
-
-applyLanguage();
-
-// ============================================================
-// Theme Toggle
-// ============================================================
 function toggleTheme() {
   state.theme = state.theme === 'light' ? 'dark' : 'light';
   document.documentElement.setAttribute('data-theme', state.theme);
@@ -2442,6 +2132,64 @@ function triggerHaptic(type) {
 // ============================================================
 // Swipe Gesture
 // ============================================================
+function initSwipeGesture() {
+  let startX = 0, startY = 0, isDragging = false;
+  const card = document.getElementById('question-card');
+
+  function showSwipeAnimation(direction) {
+    card.classList.add('swipe-transition');
+    card.classList.add(direction === 'left' ? 'swipe-left' : 'swipe-right');
+    setTimeout(() => {
+      card.classList.remove('swipe-transition');
+      card.classList.remove('swipe-left');
+      card.classList.remove('swipe-right');
+    }, 300);
+  }
+
+  card.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isDragging = true;
+  }, { passive: true });
+
+  card.addEventListener('touchend', e => {
+    if (!isDragging) return;
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    const diffX = endX - startX;
+    const diffY = endY - startY;
+    if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX < 0) {
+        showSwipeAnimation('left');
+        setTimeout(() => nextQuestion(), 150);
+      } else {
+        showSwipeAnimation('right');
+        setTimeout(() => prevQuestion(), 150);
+      }
+    }
+    isDragging = false;
+  }, { passive: true });
+
+  card.addEventListener('mousedown', e => {
+    startX = e.clientX; startY = e.clientY; isDragging = true;
+  });
+
+  card.addEventListener('mouseup', e => {
+    if (!isDragging) return;
+    const diffX = e.clientX - startX;
+    const diffY = e.clientY - startY;
+    if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX < 0) {
+        showSwipeAnimation('left');
+        setTimeout(() => nextQuestion(), 150);
+      } else {
+        showSwipeAnimation('right');
+        setTimeout(() => prevQuestion(), 150);
+      }
+    }
+    isDragging = false;
+  });
+}
 
 // ============================================================
 // TIBO Mascot Drag
@@ -2512,22 +2260,6 @@ document.addEventListener('click', function(e) {
 // ============================================================
 // Import Questions (TXT format)
 // ============================================================
-function exportData() {
-  const data = {
-    state: state,
-    questions: defaultQuestions,
-    exportTime: new Date().toISOString()
-  };
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'tibo-backup-' + new Date().toISOString().slice(0,10) + '.json';
-  a.click();
-  URL.revokeObjectURL(url);
-  alert('数据已导出！');
-}
-
 function importQuestions(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -2591,179 +2323,4 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
-
-// ============================================================
-// ============================================================
-// Enhanced Swipe Gesture with Page Transition Animation
-// ============================================================
-function initSwipeGesture() {
-  let startX = 0, startY = 0, isDragging = false;
-  const card = document.getElementById('question-card');
-  card.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    isDragging = true;
-  }, { passive: true });
-  card.addEventListener('touchend', e => {
-    if (!isDragging) return;
-    const endX = e.changedTouches[0].clientX;
-    const endY = e.changedTouches[0].clientY;
-    const diffX = endX - startX;
-    const diffY = endY - startY;
-    if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
-      if (diffX < 0) swipeToQuestion('next');
-      else swipeToQuestion('prev');
-    }
-    isDragging = false;
-  }, { passive: true });
-  // Mouse swipe for desktop
-  card.addEventListener('mousedown', e => {
-    startX = e.clientX; startY = e.clientY; isDragging = true;
-  });
-  card.addEventListener('mouseup', e => {
-    if (!isDragging) return;
-    const diffX = e.clientX - startX;
-    const diffY = e.clientY - startY;
-    if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
-      if (diffX < 0) swipeToQuestion('next');
-      else swipeToQuestion('prev');
-    }
-    isDragging = false;
-  });
-}
-
-function swipeToQuestion(direction) {
-  const card = document.getElementById('question-card');
-  if (!card) return;
-
-  const outClass = direction === 'next' ? 'swipe-left-out' : 'swipe-right-out';
-  const inClass = direction === 'next' ? 'swipe-left-in' : 'swipe-right-in';
-
-  card.classList.add(outClass);
-
-  setTimeout(() => {
-    if (direction === 'next') nextQuestion();
-    else prevQuestion();
-
-    card.classList.remove(outClass);
-    card.classList.add(inClass);
-
-    setTimeout(() => {
-      card.classList.remove(inClass);
-    }, 300);
-  }, 250);
-}
-
-// ============================================================
-// Enhanced selectOption with TIBO celebration
-// ============================================================
-function selectOption(index) {
-  const questions = getCurrentQuestions();
-  const q = questions[state.currentIndex];
-  const subId = state.currentSubject;
-
-  if (state.answered[subId]?.has(state.currentIndex)) return;
-
-  // Init sets
-  if (!state.answered[subId]) state.answered[subId] = new Set();
-  if (!state.stats[subId]) state.stats[subId] = { correct:0, total:0, history:[] };
-
-  state.answered[subId].add(state.currentIndex);
-  state.stats[subId].total++;
-
-  const isCorrect = index === q.a;
-  if (isCorrect) {
-    state.stats[subId].correct++;
-    triggerConfetti();
-    triggerHaptic('correct');
-    tiboHappy();
-    // TIBO celebration animation
-    tiboAnswerCelebration();
-  } else {
-    state.stats[subId].wrong = (state.stats[subId].wrong || 0) + 1;
-    // Add to wrong book
-    if (!state.wrongBook[subId]) state.wrongBook[subId] = [];
-    if (!state.wrongBook[subId].includes(state.currentIndex)) {
-      state.wrongBook[subId].push(state.currentIndex);
-    }
-    triggerHaptic('wrong');
-    tiboCheer();
-  }
-
-  // Update history
-  state.stats[subId].history.push(isCorrect ? 1 : 0);
-  if (state.stats[subId].history.length > 100) state.stats[subId].history.shift();
-
-  saveState();
-
-  // Update UI
-  const btns = document.querySelectorAll('.option-btn');
-  btns.forEach((btn, i) => {
-    btn.classList.add('disabled');
-    if (i === q.a) btn.classList.add('correct');
-    if (i === index && !isCorrect) btn.classList.add('wrong');
-  });
-
-  // Show explanation
-  if (q.r) {
-    document.getElementById('explanation-text').textContent = q.r;
-    document.getElementById('explanation').classList.add('show');
-  }
-
-  // If wrong, show "view explanation" button if not already visible
-  if (!isCorrect && !q.r) {
-    const optList = document.getElementById('options-list');
-    if (optList && !optList.querySelector('.view-explain-btn')) {
-      const viewBtn = document.createElement('button');
-      viewBtn.className = 'view-explain-btn';
-      viewBtn.textContent = '\u67e5\u770b\u89e3\u6790';
-      viewBtn.onclick = function() {
-        const expEl = document.getElementById('explanation');
-        if (expEl) {
-          document.getElementById('explanation-text').textContent = q.r || '\u6682\u65e0\u89e3\u6790';
-          expEl.classList.add('show');
-        }
-        viewBtn.style.display = 'none';
-      };
-      optList.parentNode.insertBefore(viewBtn, optList.nextSibling);
-    }
-  }
-
-  updateProgress();
-}
-
-function tiboAnswerCelebration() {
-  const mascot = document.getElementById('tibo-mascot');
-  if (!mascot) return;
-
-  mascot.classList.add('tibo-celebrate');
-
-  // Star burst particles
-  for (let i = 0; i < 6; i++) {
-    const star = document.createElement('div');
-    star.className = 'star-particle';
-    const angle = (i / 6) * Math.PI * 2;
-    const dist = 30 + Math.random() * 20;
-    star.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
-    star.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
-    star.style.left = '40px';
-    star.style.top = '40px';
-    star.style.background = ['#7EC8C9', '#FFD700', '#FF8A65', '#BA68C8', '#64B5F6', '#B5DCD9'][i];
-    mascot.appendChild(star);
-    setTimeout(() => star.remove(), 800);
-  }
-
-  setTimeout(() => mascot.classList.remove('tibo-celebrate'), 1000);
-}
-
-// ============================================================
-// Override switchPage to include daily page
-// ============================================================
-const _origSwitchPage = switchPage;
-switchPage = function(page) {
-  _origSwitchPage(page);
-  if (page === 'daily') renderDailyPage();
-};
-
-
 </script>
